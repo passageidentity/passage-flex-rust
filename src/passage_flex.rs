@@ -5,6 +5,7 @@ use models::{AppInfo, UserInfo};
 use openapi::models;
 
 pub struct PassageFlex {
+    app_id: String,
     configuration: Configuration,
 }
 
@@ -14,8 +15,6 @@ impl PassageFlex {
     /// Initialize the PassageFlex client
     pub fn new(app_id: String, api_key: String) -> Self {
         let mut configuration = Configuration::new();
-        // Use the app_id to set the base path
-        configuration.base_path = format!("https://api.passage.id/v1/apps/{}", app_id);
         // Use the api_key as the bearer access token
         configuration.bearer_access_token = Some(api_key);
         // Set the Passage-Version header to the version of the crate
@@ -29,7 +28,16 @@ impl PassageFlex {
             .build()
             .expect("Failed to create reqwest client for Passage");
 
-        Self { configuration }
+        let mut client = Self { app_id, configuration };
+        // Set the default server URL
+        client.set_server_url("https://api.passage.id".to_string());
+
+        client
+    }
+
+    pub fn set_server_url(&mut self, server_url: String) {
+        // Use the app_id and server_url to set the base_path
+        self.configuration.base_path = format!("{}/v1/apps/{}", server_url, self.app_id);
     }
 
     /// Get the app information

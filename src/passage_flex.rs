@@ -1,6 +1,7 @@
 use openapi::apis::configuration::Configuration;
 use openapi::apis::Error;
 use openapi::apis::{apps_api, authenticate_api, transactions_api, users_api, user_devices_api};
+use models::{AppInfo, UserInfo};
 use openapi::models;
 
 pub struct PassageFlex {
@@ -32,7 +33,7 @@ impl PassageFlex {
     }
 
     /// Get the app information
-    pub async fn get_app(&self) -> Result<Box<models::AppInfo>, Error<apps_api::GetAppError>> {
+    pub async fn get_app(&self) -> Result<Box<AppInfo>, Error<apps_api::GetAppError>> {
         apps_api::get_app(&self.configuration)
             .await
             .map(|response| response.app)
@@ -82,7 +83,7 @@ impl PassageFlex {
     pub async fn get_user(
         &self,
         external_id: String,
-    ) -> Result<Box<models::UserInfo>, Error<users_api::GetUserError>> {
+    ) -> Result<Box<UserInfo>, Error<users_api::GetUserError>> {
         users_api::get_user(&self.configuration, &external_id)
             .await
             .map(|response| response.user)
@@ -112,7 +113,7 @@ impl PassageFlex {
     pub async fn get_user_by_id(
         &self,
         user_id: String,
-    ) -> Result<Box<models::UserInfo>, Error<users_api::GetUserError>> {
+    ) -> Result<Box<UserInfo>, Error<users_api::GetUserError>> {
         users_api::get_user(&self.configuration, &user_id)
             .await
             .map(|response| response.user)

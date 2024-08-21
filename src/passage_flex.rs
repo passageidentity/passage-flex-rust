@@ -1,8 +1,14 @@
+use models::{AppInfo, UserInfo};
 use openapi::apis::configuration::Configuration;
 use openapi::apis::Error;
-use openapi::apis::{apps_api, authenticate_api, transactions_api, users_api, user_devices_api};
-use models::{AppInfo, UserInfo};
+use openapi::apis::{apps_api, authenticate_api, transactions_api, user_devices_api, users_api};
 use openapi::models;
+
+use crate::error_mapper::{
+    convert_get_user_error_to_delete_user_devices_error,
+    convert_get_user_error_to_list_user_devices_error, convert_list_error_to_get_user_error,
+    internal_server_error_get_user_error, user_not_found_get_user_error,
+};
 
 pub struct PassageFlex {
     app_id: String,
@@ -28,7 +34,10 @@ impl PassageFlex {
             .build()
             .expect("Failed to create reqwest client for Passage");
 
-        let mut client = Self { app_id, configuration };
+        let mut client = Self {
+            app_id,
+            configuration,
+        };
         // Set the default server URL
         client.set_server_url("https://api.passage.id".to_string());
 
@@ -92,9 +101,34 @@ impl PassageFlex {
         &self,
         external_id: String,
     ) -> Result<Box<UserInfo>, Error<users_api::GetUserError>> {
-        users_api::get_user(&self.configuration, &external_id)
-            .await
-            .map(|response| response.user)
+        let users = users_api::list_paginated_users(
+            &self.configuration,
+            Some(1),
+            Some(1),
+            None,
+            None,
+            Some(&external_id),
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+        )
+        .await
+        .map(|response| response.users);
+
+        match users {
+            Ok(mut users) => match users.len() {
+                0 => Err(user_not_found_get_user_error()),
+                1 => {
+                    let user = users.remove(0);
+                    self.get_user_by_id(user.id).await
+                }
+                _ => Err(internal_server_error_get_user_error()),
+            },
+            Err(e) => Err(convert_list_error_to_get_user_error(e)),
+        }
     }
 
     /// Get a user's devices by their external ID
@@ -102,7 +136,12 @@ impl PassageFlex {
         &self,
         external_id: String,
     ) -> Result<Vec<models::WebAuthnDevices>, Error<user_devices_api::ListUserDevicesError>> {
-        user_devices_api::list_user_devices(&self.configuration, &external_id)
+        let user = match self.get_user(external_id).await {
+            Ok(user) => user,
+            Err(e) => return Err(convert_get_user_error_to_list_user_devices_error(e)),
+        };
+
+        user_devices_api::list_user_devices(&self.configuration, &user.id)
             .await
             .map(|response| response.devices)
     }
@@ -113,10 +152,14 @@ impl PassageFlex {
         external_id: String,
         device_id: String,
     ) -> Result<(), Error<user_devices_api::DeleteUserDevicesError>> {
-        user_devices_api::delete_user_devices(&self.configuration, &external_id, &device_id)
-            .await
+        let user = match self.get_user(external_id).await {
+            Ok(user) => user,
+            Err(e) => return Err(convert_get_user_error_to_delete_user_devices_error(e)),
+        };
+
+        user_devices_api::delete_user_devices(&self.configuration, &user.id, &device_id).await
     }
-    
+
     /// Get a user by their user ID
     pub async fn get_user_by_id(
         &self,

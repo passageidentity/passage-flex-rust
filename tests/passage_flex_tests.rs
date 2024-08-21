@@ -1,4 +1,4 @@
-use mockito::{Matcher, Server, ServerGuard};
+use mockito::{Matcher, Mock, Server, ServerGuard};
 use passage_flex::passage_flex::PassageFlex;
 
 #[tokio::test]
@@ -27,6 +27,182 @@ async fn setup_passage_flex() -> (String, PassageFlex, ServerGuard) {
     passage.set_server_url(server.url());
 
     (app_id, passage, server)
+}
+
+async fn setup_empty_list_paginated_users_mock(app_id: &str, server: &mut ServerGuard) -> Mock {
+    server
+        .mock(
+            "GET",
+            format!("/v1/apps/{}/users?page=1&limit=1&identifier=invalid", app_id).as_str(),
+        )
+        .with_status(200)
+        .with_body(
+            r#"{
+            "users": [],
+            "_links": {
+                "first": {
+                    "href": "api.passage.id/v1/apps/test/users?created_before=1724113247\u0026limit=15\u0026order_by=created_at%3ADESC\u0026page=1"
+                },
+                "last": {
+                    "href": "api.passage.id/v1/apps/test/users?created_before=1724113247\u0026limit=15\u0026order_by=created_at%3ADESC\u0026page=1"
+                },
+                "next": {
+                    "href": ""
+                },
+                "previous": {
+                    "href": ""
+                },
+                "self": {
+                    "href": "api.passage.id/v1/apps/test/users?created_before=1724113247\u0026limit=15\u0026order_by=created_at%3ADESC\u0026page=1"
+                }
+            },
+            "created_before": 1724113247,
+            "limit": 1,
+            "page": 1,
+            "total_users": 0
+        }"#,
+        )
+        .create_async()
+        .await
+}
+
+async fn setup_valid_list_paginated_users_mock(app_id: &str, server: &mut ServerGuard) -> Mock {
+    server
+        .mock(
+            "GET",
+            format!("/v1/apps/{}/users?page=1&limit=1&identifier=valid", app_id).as_str(),
+        )
+        .with_status(200)
+        .with_body(
+            r#"{
+            "users": [
+                {
+                    "created_at": "2021-01-01T00:00:00Z",
+                    "email": "",
+                    "email_verified": false,
+                    "external_id": "valid",
+                    "id": "test_passage_id",
+                    "last_login_at": "2021-01-02T00:00:00Z",
+                    "login_count": 1,
+                    "phone": "",
+                    "phone_verified": false,
+                    "status": "active",
+                    "updated_at": "2021-01-03T00:00:00Z",
+                    "user_metadata": null
+                }
+            ],
+            "_links": {
+                "first": {
+                    "href": "api.passage.id/v1/apps/test/users?created_before=1724113247\u0026limit=15\u0026order_by=created_at%3ADESC\u0026page=1"
+                },
+                "last": {
+                    "href": "api.passage.id/v1/apps/test/users?created_before=1724113247\u0026limit=15\u0026order_by=created_at%3ADESC\u0026page=1"
+                },
+                "next": {
+                    "href": ""
+                },
+                "previous": {
+                    "href": ""
+                },
+                "self": {
+                    "href": "api.passage.id/v1/apps/test/users?created_before=1724113247\u0026limit=15\u0026order_by=created_at%3ADESC\u0026page=1"
+                }
+            },
+            "created_before": 1724113247,
+            "limit": 1,
+            "page": 1,
+            "total_users": 1
+        }"#,
+        )
+        .create_async()
+        .await
+}
+
+async fn setup_valid_get_user_mock(app_id: &str, server: &mut ServerGuard) -> Mock {
+    server
+        .mock(
+            "GET",
+            format!("/v1/apps/{}/users/test_passage_id", app_id).as_str(),
+        )
+        .with_status(200)
+        .with_body(
+            r#"{
+            "user": {
+                    "created_at": "2021-01-01T00:00:00Z",
+                    "email": "",
+                    "email_verified": false,
+                    "external_id": "valid",
+                    "id": "test_passage_id",
+                    "last_login_at": "2021-01-02T00:00:00Z",
+                    "login_count": 1,
+                    "phone": "",
+                    "phone_verified": false,
+                    "recent_events": [],
+                    "social_connections": {},
+                    "status": "active",
+                    "updated_at": "2021-01-03T00:00:00Z",
+                    "user_metadata": null,
+                    "webauthn": false,
+                    "webauthn_devices": [{
+                        "created_at": "2021-01-01T00:00:00Z",
+                        "cred_id": "test_cred_id",
+                        "friendly_name": "Device 1",
+                        "id": "test_device_id",
+                        "last_login_at": "2021-01-03T00:00:00Z",
+                        "type": "platform",
+                        "updated_at": "2021-01-02T00:00:00Z",
+                        "usage_count": 1,
+                        "icons": {"light": null, "dark": null}
+                    }],
+                    "webauthn_types": ["platform"]
+            }
+        }"#,
+        )
+        .create_async()
+        .await
+}
+
+async fn setup_valid_get_devices_mock(app_id: &str, server: &mut ServerGuard) -> Mock {
+    server
+        .mock(
+            "GET",
+            format!("/v1/apps/{}/users/test_passage_id/devices", app_id).as_str(),
+        )
+        .with_status(200)
+        .with_body(
+            r#"{
+            "devices": [
+                {
+                    "created_at": "2021-01-01T00:00:00Z",
+                    "cred_id": "test_cred_id",
+                    "friendly_name": "Device 1",
+                    "id": "test_device_id",
+                    "last_login_at": "2021-01-03T00:00:00Z",
+                    "type": "platform",
+                    "updated_at": "2021-01-02T00:00:00Z",
+                    "usage_count": 1,
+                    "icons": {"light": null, "dark": null}
+                }
+            ]
+        }"#,
+        )
+        .create_async()
+        .await
+}
+
+async fn setup_valid_revoke_device_mock(app_id: &str, server: &mut ServerGuard) -> Mock {
+    server
+        .mock(
+            "DELETE",
+            format!(
+                "/v1/apps/{}/users/test_passage_id/devices/test_device_id",
+                app_id
+            )
+            .as_str(),
+        )
+        .with_status(200)
+        .create_async()
+        .await
 }
 
 #[tokio::test]
@@ -111,97 +287,36 @@ async fn test_verify_nonce() {
 async fn test_get_user() {
     let (app_id, passage_flex, mut server) = setup_passage_flex().await;
 
-    let m1 = server
-        .mock("GET", format!("/v1/apps/{}/users/invalid", app_id).as_str())
-        .with_status(404)
-        .with_body(r#"{"error": "User not found","code": "user_not_found"}"#)
-        .create_async()
-        .await;
-
+    let m1 = setup_empty_list_paginated_users_mock(&app_id, &mut server).await;
     let invalid_result = passage_flex.get_user("invalid".to_string()).await;
     m1.assert_async().await;
     assert!(invalid_result.is_err());
 
-    let m2 = server
-        .mock("GET", format!("/v1/apps/{}/users/valid", app_id).as_str())
-        .with_status(200)
-        .with_body(
-            r#"{
-            "user": {
-                "created_at": "2021-01-01T00:00:00Z",
-                "email": "",
-                "email_verified": false,
-                "external_id": "test_external_id",
-                "id": "valid",
-                "last_login_at": "2021-01-02T00:00:00Z",
-                "login_count": 1,
-                "phone": "",
-                "phone_verified": false,
-                "recent_events": [],
-                "social_connections": {},
-                "status": "active",
-                "updated_at": "2021-01-03T00:00:00Z",
-                "user_metadata": null,
-                "webauthn": false,
-                "webauthn_devices": [],
-                "webauthn_types": []
-            }
-        }"#,
-        )
-        .create_async()
-        .await;
+    let m2 = setup_valid_list_paginated_users_mock(&app_id, &mut server).await;
+    let m3 = setup_valid_get_user_mock(&app_id, &mut server).await;
 
     let user_info = passage_flex.get_user("valid".to_string()).await.unwrap();
     m2.assert_async().await;
-    assert_eq!(user_info.id, "valid");
+    m3.assert_async().await;
+    assert_eq!(user_info.external_id, "valid");
 }
 
 #[tokio::test]
 async fn test_get_devices() {
     let (app_id, passage_flex, mut server) = setup_passage_flex().await;
 
-    let m1 = server
-        .mock(
-            "GET",
-            format!("/v1/apps/{}/users/invalid/devices", app_id).as_str(),
-        )
-        .with_status(404)
-        .with_body(r#"{"error": "User not found","code": "user_not_found"}"#)
-        .create_async()
-        .await;
-
+    let m1 = setup_empty_list_paginated_users_mock(&app_id, &mut server).await;
     let invalid_result = passage_flex.get_devices("invalid".to_string()).await;
     m1.assert_async().await;
     assert!(invalid_result.is_err());
 
-    let m2 = server
-        .mock(
-            "GET",
-            format!("/v1/apps/{}/users/valid/devices", app_id).as_str(),
-        )
-        .with_status(200)
-        .with_body(
-            r#"{
-            "devices": [
-                {
-                    "created_at": "2021-01-01T00:00:00Z",
-                    "cred_id": "test_cred_id",
-                    "friendly_name": "Device 1",
-                    "id": "test_device_id",
-                    "last_login_at": "2021-01-03T00:00:00Z",
-                    "type": "platform",
-                    "updated_at": "2021-01-02T00:00:00Z",
-                    "usage_count": 1,
-                    "icons": {"light": null, "dark": null}
-                }
-            ]
-        }"#,
-        )
-        .create_async()
-        .await;
-
+    let m2 = setup_valid_list_paginated_users_mock(&app_id, &mut server).await;
+    let m3 = setup_valid_get_user_mock(&app_id, &mut server).await;
+    let m4 = setup_valid_get_devices_mock(&app_id, &mut server).await;
     let devices = passage_flex.get_devices("valid".to_string()).await.unwrap();
     m2.assert_async().await;
+    m3.assert_async().await;
+    m4.assert_async().await;
     assert_eq!(devices.len(), 1);
     assert_eq!(devices[0].id, "test_device_id");
 }
@@ -209,35 +324,23 @@ async fn test_get_devices() {
 #[tokio::test]
 async fn test_revoke_device() {
     let (app_id, passage_flex, mut server) = setup_passage_flex().await;
-    let m1 = server
-        .mock(
-            "DELETE",
-            format!("/v1/apps/{}/users/invalid/devices/invalid", app_id).as_str(),
-        )
-        .with_status(404)
-        .with_body(r#"{"error": "User not found","code": "user_not_found"}"#)
-        .create_async()
-        .await;
 
+    let m1 = setup_empty_list_paginated_users_mock(&app_id, &mut server).await;
     let invalid_result = passage_flex
         .revoke_device("invalid".to_string(), "invalid".to_string())
         .await;
     m1.assert_async().await;
     assert!(invalid_result.is_err());
 
-    let m2 = server
-        .mock(
-            "DELETE",
-            format!("/v1/apps/{}/users/valid/devices/valid", app_id).as_str(),
-        )
-        .with_status(200)
-        .create_async()
-        .await;
-
+    let m2 = setup_valid_list_paginated_users_mock(&app_id, &mut server).await;
+    let m3 = setup_valid_get_user_mock(&app_id, &mut server).await;
+    let m4 = setup_valid_revoke_device_mock(&app_id, &mut server).await;
     let result = passage_flex
-        .revoke_device("valid".to_string(), "valid".to_string())
+        .revoke_device("valid".to_string(), "test_device_id".to_string())
         .await;
     m2.assert_async().await;
+    m3.assert_async().await;
+    m4.assert_async().await;
     assert!(result.is_ok());
 }
 

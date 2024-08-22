@@ -429,6 +429,7 @@ mod test {
 
         let invalid_result = passage_flex.verify_nonce("invalid".to_string()).await;
         assert!(invalid_result.is_err());
+        assert!(matches!(invalid_result, Err(Error::InvalidNonce)));
         m1.assert_async().await;
 
         let m2 = server
@@ -458,6 +459,7 @@ mod test {
         let invalid_result = passage_flex.get_user("invalid".to_string()).await;
         m1.assert_async().await;
         assert!(invalid_result.is_err());
+        assert!(matches!(invalid_result, Err(Error::UserNotFound)));
 
         let m2 = setup_valid_list_paginated_users_mock(&app_id, &mut server).await;
         let m3 = setup_valid_get_user_mock(&app_id, &mut server).await;
@@ -476,6 +478,7 @@ mod test {
         let invalid_result = passage_flex.get_devices("invalid".to_string()).await;
         m1.assert_async().await;
         assert!(invalid_result.is_err());
+        assert!(matches!(invalid_result, Err(Error::UserNotFound)));
 
         let m2 = setup_valid_list_paginated_users_mock(&app_id, &mut server).await;
         let m3 = setup_valid_get_user_mock(&app_id, &mut server).await;
@@ -498,6 +501,7 @@ mod test {
             .await;
         m1.assert_async().await;
         assert!(invalid_result.is_err());
+        assert!(matches!(invalid_result, Err(Error::UserNotFound)));
 
         let m2 = setup_valid_list_paginated_users_mock(&app_id, &mut server).await;
         let m3 = setup_valid_get_user_mock(&app_id, &mut server).await;
@@ -521,13 +525,14 @@ mod test {
         invalid_passage.set_server_url(server.url());
         let m1 = server
             .mock("GET", "/v1/apps/invalid/")
-            .with_status(404)
-            .with_body(r#"{"error": "App not found","code": "app_not_found"}"#)
+            .with_status(401)
+            .with_body(r#"{"error": "Invalid access token","code": "invalid_access_token"}"#)
             .create_async()
             .await;
         let invalid_result = invalid_passage.get_app().await;
         m1.assert_async().await;
         assert!(invalid_result.is_err());
+        assert!(matches!(invalid_result, Err(Error::InvalidAccessToken)));
 
         let app_id = "test_app_id";
         let mut passage = PassageFlex::new(app_id.to_string(), api_key.to_string());

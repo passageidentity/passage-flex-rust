@@ -9,8 +9,6 @@ pub struct PassageFlex {
     configuration: Configuration,
 }
 
-const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
-
 impl PassageFlex {
     /// Initialize the PassageFlex client
     pub fn new(app_id: String, api_key: String) -> Self {
@@ -21,7 +19,10 @@ impl PassageFlex {
         let mut headers = reqwest::header::HeaderMap::with_capacity(1);
         headers.insert(
             "Passage-Version",
-            reqwest::header::HeaderValue::from_static(PKG_VERSION),
+            reqwest::header::HeaderValue::from_static(concat!(
+                "passage-flex-rust ",
+                env!("CARGO_PKG_VERSION")
+            )),
         );
         configuration.client = reqwest::Client::builder()
             .default_headers(headers)

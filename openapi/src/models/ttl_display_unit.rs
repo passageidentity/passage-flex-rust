@@ -35,9 +35,3 @@ impl std::fmt::Display for TtlDisplayUnit {
         }
     }
 }
-
-impl Default for TtlDisplayUnit {
-    fn default() -> TtlDisplayUnit {
-        Self::S
-    }
-}

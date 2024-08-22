@@ -11,14 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AppResponse {
     #[serde(rename = "app")]
     pub app: Box<models::AppInfo>,
-}
-
-impl AppResponse {
-    pub fn new(app: models::AppInfo) -> AppResponse {
-        AppResponse { app: Box::new(app) }
-    }
 }

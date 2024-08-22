@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Model400Error {
     #[serde(rename = "code")]
     pub code: Code,
@@ -19,11 +19,6 @@ pub struct Model400Error {
     pub error: String,
 }
 
-impl Model400Error {
-    pub fn new(code: Code, error: String) -> Model400Error {
-        Model400Error { code, error }
-    }
-}
 ///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
@@ -31,10 +26,4 @@ pub enum Code {
     InvalidRequest,
     #[serde(rename = "custom_provider_required")]
     CustomProviderRequired,
-}
-
-impl Default for Code {
-    fn default() -> Code {
-        Self::InvalidRequest
-    }
 }

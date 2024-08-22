@@ -40,9 +40,3 @@ impl std::fmt::Display for UserMetadataFieldType {
         }
     }
 }
-
-impl Default for UserMetadataFieldType {
-    fn default() -> UserMetadataFieldType {
-        Self::String
-    }
-}

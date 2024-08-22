@@ -28,9 +28,3 @@ impl std::fmt::Display for UserEventStatus {
         }
     }
 }
-
-impl Default for UserEventStatus {
-    fn default() -> UserEventStatus {
-        Self::Complete
-    }
-}

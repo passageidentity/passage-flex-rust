@@ -11,14 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ListDevicesResponse {
     #[serde(rename = "devices")]
     pub devices: Vec<models::WebAuthnDevices>,
-}
-
-impl ListDevicesResponse {
-    pub fn new(devices: Vec<models::WebAuthnDevices>) -> ListDevicesResponse {
-        ListDevicesResponse { devices }
-    }
 }

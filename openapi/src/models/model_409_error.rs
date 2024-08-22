@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Model409Error {
     #[serde(rename = "code")]
     pub code: Code,
@@ -19,11 +19,6 @@ pub struct Model409Error {
     pub error: String,
 }
 
-impl Model409Error {
-    pub fn new(code: Code, error: String) -> Model409Error {
-        Model409Error { code, error }
-    }
-}
 ///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
@@ -33,10 +28,4 @@ pub enum Code {
     AlreadyOrganizationMember,
     #[serde(rename = "user_has_no_passkeys")]
     HasNoPasskeys,
-}
-
-impl Default for Code {
-    fn default() -> Code {
-        Self::AlreadyAdmin
-    }
 }

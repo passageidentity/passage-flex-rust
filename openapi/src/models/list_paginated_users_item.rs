@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ListPaginatedUsersItem {
     #[serde(rename = "created_at")]
     pub created_at: String,
@@ -38,36 +38,4 @@ pub struct ListPaginatedUsersItem {
     pub updated_at: String,
     #[serde(rename = "user_metadata", deserialize_with = "Option::deserialize")]
     pub user_metadata: Option<serde_json::Value>,
-}
-
-impl ListPaginatedUsersItem {
-    pub fn new(
-        created_at: String,
-        email: String,
-        email_verified: bool,
-        external_id: String,
-        id: String,
-        last_login_at: String,
-        login_count: i32,
-        phone: String,
-        phone_verified: bool,
-        status: models::UserStatus,
-        updated_at: String,
-        user_metadata: Option<serde_json::Value>,
-    ) -> ListPaginatedUsersItem {
-        ListPaginatedUsersItem {
-            created_at,
-            email,
-            email_verified,
-            external_id,
-            id,
-            last_login_at,
-            login_count,
-            phone,
-            phone_verified,
-            status,
-            updated_at,
-            user_metadata,
-        }
-    }
 }

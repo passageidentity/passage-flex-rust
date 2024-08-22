@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CreateTransactionRegisterRequest {
     /// the user's unique identifier
     #[serde(rename = "external_id")]
@@ -19,16 +19,4 @@ pub struct CreateTransactionRegisterRequest {
     /// the immutable display name of the passkey that the user will see
     #[serde(rename = "passkey_display_name")]
     pub passkey_display_name: String,
-}
-
-impl CreateTransactionRegisterRequest {
-    pub fn new(
-        external_id: String,
-        passkey_display_name: String,
-    ) -> CreateTransactionRegisterRequest {
-        CreateTransactionRegisterRequest {
-            external_id,
-            passkey_display_name,
-        }
-    }
 }

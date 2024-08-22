@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Model500Error {
     #[serde(rename = "code")]
     pub code: Code,
@@ -19,20 +19,9 @@ pub struct Model500Error {
     pub error: String,
 }
 
-impl Model500Error {
-    pub fn new(code: Code, error: String) -> Model500Error {
-        Model500Error { code, error }
-    }
-}
 ///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
     #[serde(rename = "internal_server_error")]
     InternalServerError,
-}
-
-impl Default for Code {
-    fn default() -> Code {
-        Self::InternalServerError
-    }
 }

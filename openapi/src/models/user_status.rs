@@ -31,9 +31,3 @@ impl std::fmt::Display for UserStatus {
         }
     }
 }
-
-impl Default for UserStatus {
-    fn default() -> UserStatus {
-        Self::Active
-    }
-}

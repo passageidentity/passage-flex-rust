@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct WebAuthnDevices {
     /// The first time this webAuthn device was used to authenticate the user
     #[serde(rename = "created_at")]
@@ -38,30 +38,4 @@ pub struct WebAuthnDevices {
     pub usage_count: i32,
     #[serde(rename = "icons")]
     pub icons: Box<models::WebAuthnIcons>,
-}
-
-impl WebAuthnDevices {
-    pub fn new(
-        created_at: String,
-        cred_id: String,
-        friendly_name: String,
-        id: String,
-        last_login_at: String,
-        r#type: models::WebAuthnType,
-        updated_at: String,
-        usage_count: i32,
-        icons: models::WebAuthnIcons,
-    ) -> WebAuthnDevices {
-        WebAuthnDevices {
-            created_at,
-            cred_id,
-            friendly_name,
-            id,
-            last_login_at,
-            r#type,
-            updated_at,
-            usage_count,
-            icons: Box::new(icons),
-        }
-    }
 }

@@ -46,9 +46,3 @@ impl std::fmt::Display for Technologies {
         }
     }
 }
-
-impl Default for Technologies {
-    fn default() -> Technologies {
-        Self::React
-    }
-}

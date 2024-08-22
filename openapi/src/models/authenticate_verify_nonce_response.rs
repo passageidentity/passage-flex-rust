@@ -11,15 +11,9 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AuthenticateVerifyNonceResponse {
     /// the user's unique identifier
     #[serde(rename = "external_id")]
     pub external_id: String,
-}
-
-impl AuthenticateVerifyNonceResponse {
-    pub fn new(external_id: String) -> AuthenticateVerifyNonceResponse {
-        AuthenticateVerifyNonceResponse { external_id }
-    }
 }

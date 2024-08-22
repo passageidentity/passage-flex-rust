@@ -11,14 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PasskeysAuthMethod {
     #[serde(rename = "enabled")]
     pub enabled: bool,
-}
-
-impl PasskeysAuthMethod {
-    pub fn new(enabled: bool) -> PasskeysAuthMethod {
-        PasskeysAuthMethod { enabled }
-    }
 }

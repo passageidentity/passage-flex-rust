@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ElementCustomization {
     /// Container background color in hex. Default is `#ffffff` in light mode & `#383838` in dark mode.
     #[serde(
@@ -131,31 +131,4 @@ pub struct ElementCustomization {
         skip_serializing_if = "Option::is_none"
     )]
     pub passage_secondary_button_border_width: Option<i32>,
-}
-
-impl ElementCustomization {
-    pub fn new() -> ElementCustomization {
-        ElementCustomization {
-            passage_container_background_color: None,
-            passage_container_max_width: None,
-            passage_input_box_background_color: None,
-            passage_input_box_border_radius: None,
-            passage_header_font_family: None,
-            passage_body_font_family: None,
-            passage_header_text_color: None,
-            passage_body_text_color: None,
-            passage_primary_button_background_color: None,
-            passage_primary_button_text_color: None,
-            passage_primary_button_hover_color: None,
-            passage_primary_button_border_radius: None,
-            passage_primary_button_border_color: None,
-            passage_primary_button_border_width: None,
-            passage_secondary_button_background_color: None,
-            passage_secondary_button_text_color: None,
-            passage_secondary_button_hover_color: None,
-            passage_secondary_button_border_radius: None,
-            passage_secondary_button_border_color: None,
-            passage_secondary_button_border_width: None,
-        }
-    }
 }

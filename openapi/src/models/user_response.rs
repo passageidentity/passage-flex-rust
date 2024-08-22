@@ -11,16 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UserResponse {
     #[serde(rename = "user")]
     pub user: Box<models::UserInfo>,
-}
-
-impl UserResponse {
-    pub fn new(user: models::UserInfo) -> UserResponse {
-        UserResponse {
-            user: Box::new(user),
-        }
-    }
 }

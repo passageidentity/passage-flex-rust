@@ -11,14 +11,8 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Link {
     #[serde(rename = "href")]
     pub href: String,
-}
-
-impl Link {
-    pub fn new(href: String) -> Link {
-        Link { href }
-    }
 }

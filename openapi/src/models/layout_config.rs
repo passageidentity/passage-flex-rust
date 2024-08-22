@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LayoutConfig {
     #[serde(rename = "h")]
     pub h: i32,
@@ -23,10 +23,4 @@ pub struct LayoutConfig {
     pub x: i32,
     #[serde(rename = "y")]
     pub y: i32,
-}
-
-impl LayoutConfig {
-    pub fn new(h: i32, id: String, w: i32, x: i32, y: i32) -> LayoutConfig {
-        LayoutConfig { h, id, w, x, y }
-    }
 }

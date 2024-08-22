@@ -83,9 +83,3 @@ impl std::fmt::Display for FontFamily {
         }
     }
 }
-
-impl Default for FontFamily {
-    fn default() -> FontFamily {
-        Self::Helvetica
-    }
-}

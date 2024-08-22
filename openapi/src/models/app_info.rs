@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AppInfo {
     #[serde(rename = "additional_auth_origins")]
     pub additional_auth_origins: Vec<String>,
@@ -103,89 +103,6 @@ pub struct AppInfo {
     pub element_customization_dark: Box<models::ElementCustomization>,
 }
 
-impl AppInfo {
-    pub fn new(
-        additional_auth_origins: Vec<String>,
-        allowed_callback_urls: Vec<String>,
-        allowed_identifier: String,
-        allowed_logout_urls: Vec<String>,
-        application_login_uri: String,
-        auth_fallback_method: String,
-        auth_fallback_method_ttl: i32,
-        auth_methods: models::AuthMethods,
-        auth_origin: String,
-        auto_theme_enabled: bool,
-        created_at: String,
-        default_language: String,
-        id: String,
-        layouts: models::Layouts,
-        login_url: String,
-        name: String,
-        hosted: bool,
-        hosted_subdomain: String,
-        passage_branding: bool,
-        profile_management: bool,
-        public_signup: bool,
-        redirect_url: String,
-        refresh_absolute_lifetime: i32,
-        refresh_enabled: bool,
-        refresh_inactivity_lifetime: i32,
-        require_email_verification: bool,
-        require_identifier_verification: bool,
-        required_identifier: String,
-        role: String,
-        rsa_public_key: String,
-        session_timeout_length: i32,
-        r#type: Type,
-        user_metadata_schema: Vec<models::UserMetadataField>,
-        technologies: Vec<models::Technologies>,
-        element_customization: models::ElementCustomization,
-        element_customization_dark: models::ElementCustomization,
-    ) -> AppInfo {
-        AppInfo {
-            additional_auth_origins,
-            allowed_callback_urls,
-            allowed_identifier,
-            allowed_logout_urls,
-            application_login_uri,
-            auth_fallback_method,
-            auth_fallback_method_ttl,
-            auth_methods: Box::new(auth_methods),
-            auth_origin,
-            auto_theme_enabled,
-            created_at,
-            default_language,
-            id,
-            layouts: Box::new(layouts),
-            login_url,
-            light_logo_url: None,
-            dark_logo_url: None,
-            name,
-            hosted,
-            hosted_subdomain,
-            id_token_lifetime: None,
-            passage_branding,
-            profile_management,
-            public_signup,
-            redirect_url,
-            refresh_absolute_lifetime,
-            refresh_enabled,
-            refresh_inactivity_lifetime,
-            require_email_verification,
-            require_identifier_verification,
-            required_identifier,
-            role,
-            rsa_public_key,
-            secret: None,
-            session_timeout_length,
-            r#type,
-            user_metadata_schema,
-            technologies,
-            element_customization: Box::new(element_customization),
-            element_customization_dark: Box::new(element_customization_dark),
-        }
-    }
-}
 ///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Type {
@@ -193,10 +110,4 @@ pub enum Type {
     Complete,
     #[serde(rename = "flex")]
     Flex,
-}
-
-impl Default for Type {
-    fn default() -> Type {
-        Self::Complete
-    }
 }

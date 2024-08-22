@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MagicLinkAuthMethod {
     #[serde(rename = "enabled")]
     pub enabled: bool,
@@ -20,18 +20,4 @@ pub struct MagicLinkAuthMethod {
     pub ttl: i32,
     #[serde(rename = "ttl_display_unit")]
     pub ttl_display_unit: models::TtlDisplayUnit,
-}
-
-impl MagicLinkAuthMethod {
-    pub fn new(
-        enabled: bool,
-        ttl: i32,
-        ttl_display_unit: models::TtlDisplayUnit,
-    ) -> MagicLinkAuthMethod {
-        MagicLinkAuthMethod {
-            enabled,
-            ttl,
-            ttl_display_unit,
-        }
-    }
 }

@@ -32,9 +32,3 @@ impl std::fmt::Display for WebAuthnType {
         }
     }
 }
-
-impl Default for WebAuthnType {
-    fn default() -> WebAuthnType {
-        Self::Passkey
-    }
-}

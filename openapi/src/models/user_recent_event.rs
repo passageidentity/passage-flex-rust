@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UserRecentEvent {
     #[serde(rename = "created_at")]
     pub created_at: String,
@@ -27,26 +27,4 @@ pub struct UserRecentEvent {
     pub r#type: String,
     #[serde(rename = "user_agent")]
     pub user_agent: String,
-}
-
-impl UserRecentEvent {
-    pub fn new(
-        created_at: String,
-        completed_at: Option<String>,
-        id: String,
-        ip_addr: String,
-        status: models::UserEventStatus,
-        r#type: String,
-        user_agent: String,
-    ) -> UserRecentEvent {
-        UserRecentEvent {
-            created_at,
-            completed_at,
-            id,
-            ip_addr,
-            status,
-            r#type,
-            user_agent,
-        }
-    }
 }

@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ListPaginatedUsersResponse {
     #[serde(rename = "_links")]
     pub _links: Box<models::PaginatedLinks>,
@@ -27,24 +27,4 @@ pub struct ListPaginatedUsersResponse {
     pub total_users: i64,
     #[serde(rename = "users")]
     pub users: Vec<models::ListPaginatedUsersItem>,
-}
-
-impl ListPaginatedUsersResponse {
-    pub fn new(
-        _links: models::PaginatedLinks,
-        created_before: i64,
-        limit: i32,
-        page: i32,
-        total_users: i64,
-        users: Vec<models::ListPaginatedUsersItem>,
-    ) -> ListPaginatedUsersResponse {
-        ListPaginatedUsersResponse {
-            _links: Box::new(_links),
-            created_before,
-            limit,
-            page,
-            total_users,
-            users,
-        }
-    }
 }

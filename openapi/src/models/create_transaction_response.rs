@@ -11,15 +11,9 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CreateTransactionResponse {
     /// the created transaction ID for this registration or authentication attempt
     #[serde(rename = "transaction_id")]
     pub transaction_id: String,
-}
-
-impl CreateTransactionResponse {
-    pub fn new(transaction_id: String) -> CreateTransactionResponse {
-        CreateTransactionResponse { transaction_id }
-    }
 }

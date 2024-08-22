@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PaginatedLinks {
     #[serde(rename = "first")]
     pub first: Box<models::Link>,
@@ -23,22 +23,4 @@ pub struct PaginatedLinks {
     pub previous: Box<models::Link>,
     #[serde(rename = "self")]
     pub param_self: Box<models::Link>,
-}
-
-impl PaginatedLinks {
-    pub fn new(
-        first: models::Link,
-        last: models::Link,
-        next: models::Link,
-        previous: models::Link,
-        param_self: models::Link,
-    ) -> PaginatedLinks {
-        PaginatedLinks {
-            first: Box::new(first),
-            last: Box::new(last),
-            next: Box::new(next),
-            previous: Box::new(previous),
-            param_self: Box::new(param_self),
-        }
-    }
 }

@@ -11,15 +11,9 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CreateTransactionAuthenticateRequest {
     /// the user's unique identifier
     #[serde(rename = "external_id")]
     pub external_id: String,
-}
-
-impl CreateTransactionAuthenticateRequest {
-    pub fn new(external_id: String) -> CreateTransactionAuthenticateRequest {
-        CreateTransactionAuthenticateRequest { external_id }
-    }
 }

@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Model403Error {
     #[serde(rename = "code")]
     pub code: Code,
@@ -19,11 +19,6 @@ pub struct Model403Error {
     pub error: String,
 }
 
-impl Model403Error {
-    pub fn new(code: Code, error: String) -> Model403Error {
-        Model403Error { code, error }
-    }
-}
 ///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
@@ -39,10 +34,4 @@ pub enum Code {
     CannotSelfUpdateOrganizationMember,
     #[serde(rename = "operation_not_allowed")]
     OperationNotAllowed,
-}
-
-impl Default for Code {
-    fn default() -> Code {
-        Self::CannotCreateOrganizationBillingPortalSession
-    }
 }

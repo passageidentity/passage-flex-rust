@@ -12,7 +12,7 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 /// AuthMethods : Denotes what methods this app is allowed to use for authentication with configurations
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AuthMethods {
     #[serde(rename = "passkeys")]
     pub passkeys: Box<models::PasskeysAuthMethod>,
@@ -20,19 +20,4 @@ pub struct AuthMethods {
     pub otp: Box<models::OtpAuthMethod>,
     #[serde(rename = "magic_link")]
     pub magic_link: Box<models::MagicLinkAuthMethod>,
-}
-
-impl AuthMethods {
-    /// Denotes what methods this app is allowed to use for authentication with configurations
-    pub fn new(
-        passkeys: models::PasskeysAuthMethod,
-        otp: models::OtpAuthMethod,
-        magic_link: models::MagicLinkAuthMethod,
-    ) -> AuthMethods {
-        AuthMethods {
-            passkeys: Box::new(passkeys),
-            otp: Box::new(otp),
-            magic_link: Box::new(magic_link),
-        }
-    }
 }

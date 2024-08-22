@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GithubUserSocialConnection {
     /// The external ID of the Social Connection.
     #[serde(rename = "provider_id")]
@@ -23,20 +23,4 @@ pub struct GithubUserSocialConnection {
     /// The email of connected social user.
     #[serde(rename = "provider_identifier")]
     pub provider_identifier: String,
-}
-
-impl GithubUserSocialConnection {
-    pub fn new(
-        provider_id: String,
-        created_at: String,
-        last_login_at: String,
-        provider_identifier: String,
-    ) -> GithubUserSocialConnection {
-        GithubUserSocialConnection {
-            provider_id,
-            created_at,
-            last_login_at,
-            provider_identifier,
-        }
-    }
 }

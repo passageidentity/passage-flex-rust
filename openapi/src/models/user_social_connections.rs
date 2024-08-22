@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UserSocialConnections {
     #[serde(rename = "apple", skip_serializing_if = "Option::is_none")]
     pub apple: Option<Box<models::AppleUserSocialConnection>>,
@@ -19,14 +19,4 @@ pub struct UserSocialConnections {
     pub github: Option<Box<models::GithubUserSocialConnection>>,
     #[serde(rename = "google", skip_serializing_if = "Option::is_none")]
     pub google: Option<Box<models::GoogleUserSocialConnection>>,
-}
-
-impl UserSocialConnections {
-    pub fn new() -> UserSocialConnections {
-        UserSocialConnections {
-            apple: None,
-            github: None,
-            google: None,
-        }
-    }
 }

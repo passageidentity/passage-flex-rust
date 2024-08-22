@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UserMetadataField {
     #[serde(rename = "field_name")]
     pub field_name: String,
@@ -25,24 +25,4 @@ pub struct UserMetadataField {
     pub registration: bool,
     #[serde(rename = "type")]
     pub r#type: models::UserMetadataFieldType,
-}
-
-impl UserMetadataField {
-    pub fn new(
-        field_name: String,
-        friendly_name: String,
-        id: String,
-        profile: bool,
-        registration: bool,
-        r#type: models::UserMetadataFieldType,
-    ) -> UserMetadataField {
-        UserMetadataField {
-            field_name,
-            friendly_name,
-            id,
-            profile,
-            registration,
-            r#type,
-        }
-    }
 }

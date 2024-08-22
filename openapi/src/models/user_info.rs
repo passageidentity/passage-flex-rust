@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UserInfo {
     #[serde(rename = "created_at")]
     pub created_at: String,
@@ -49,46 +49,4 @@ pub struct UserInfo {
     /// List of credential types that have been used for authentication
     #[serde(rename = "webauthn_types")]
     pub webauthn_types: Vec<models::WebAuthnType>,
-}
-
-impl UserInfo {
-    pub fn new(
-        created_at: String,
-        email: String,
-        email_verified: bool,
-        external_id: String,
-        id: String,
-        last_login_at: String,
-        login_count: i32,
-        phone: String,
-        phone_verified: bool,
-        recent_events: Vec<models::UserRecentEvent>,
-        social_connections: models::UserSocialConnections,
-        status: models::UserStatus,
-        updated_at: String,
-        user_metadata: Option<serde_json::Value>,
-        webauthn: bool,
-        webauthn_devices: Vec<models::WebAuthnDevices>,
-        webauthn_types: Vec<models::WebAuthnType>,
-    ) -> UserInfo {
-        UserInfo {
-            created_at,
-            email,
-            email_verified,
-            external_id,
-            id,
-            last_login_at,
-            login_count,
-            phone,
-            phone_verified,
-            recent_events,
-            social_connections: Box::new(social_connections),
-            status,
-            updated_at,
-            user_metadata,
-            webauthn,
-            webauthn_devices,
-            webauthn_types,
-        }
-    }
 }

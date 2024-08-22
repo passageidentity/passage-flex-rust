@@ -39,7 +39,7 @@ impl fmt::Display for Error {
     }
 }
 
-mod error_mapper;
+mod error;
 
 pub mod passage_flex;
 pub use openapi::apis::transactions_api::CreateRegisterTransactionError;

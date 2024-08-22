@@ -24,7 +24,11 @@ pub struct AuthMethods {
 
 impl AuthMethods {
     /// Denotes what methods this app is allowed to use for authentication with configurations
-    pub fn new(passkeys: models::PasskeysAuthMethod, otp: models::OtpAuthMethod, magic_link: models::MagicLinkAuthMethod) -> AuthMethods {
+    pub fn new(
+        passkeys: models::PasskeysAuthMethod,
+        otp: models::OtpAuthMethod,
+        magic_link: models::MagicLinkAuthMethod,
+    ) -> AuthMethods {
         AuthMethods {
             passkeys: Box::new(passkeys),
             otp: Box::new(otp),
@@ -32,4 +36,3 @@ impl AuthMethods {
         }
     }
 }
-

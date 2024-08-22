@@ -22,11 +22,13 @@ pub struct CreateTransactionRegisterRequest {
 }
 
 impl CreateTransactionRegisterRequest {
-    pub fn new(external_id: String, passkey_display_name: String) -> CreateTransactionRegisterRequest {
+    pub fn new(
+        external_id: String,
+        passkey_display_name: String,
+    ) -> CreateTransactionRegisterRequest {
         CreateTransactionRegisterRequest {
             external_id,
             passkey_display_name,
         }
     }
 }
-

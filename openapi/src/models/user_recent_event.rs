@@ -30,7 +30,15 @@ pub struct UserRecentEvent {
 }
 
 impl UserRecentEvent {
-    pub fn new(created_at: String, completed_at: Option<String>, id: String, ip_addr: String, status: models::UserEventStatus, r#type: String, user_agent: String) -> UserRecentEvent {
+    pub fn new(
+        created_at: String,
+        completed_at: Option<String>,
+        id: String,
+        ip_addr: String,
+        status: models::UserEventStatus,
+        r#type: String,
+        user_agent: String,
+    ) -> UserRecentEvent {
         UserRecentEvent {
             created_at,
             completed_at,
@@ -42,4 +50,3 @@ impl UserRecentEvent {
         }
     }
 }
-

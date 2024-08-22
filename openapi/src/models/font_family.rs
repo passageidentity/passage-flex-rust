@@ -55,7 +55,6 @@ pub enum FontFamily {
     Luminari,
     #[serde(rename = "Comic Sans MS")]
     ComicSansMs,
-
 }
 
 impl std::fmt::Display for FontFamily {
@@ -90,4 +89,3 @@ impl Default for FontFamily {
         Self::Helvetica
     }
 }
-

@@ -26,7 +26,12 @@ pub struct GithubUserSocialConnection {
 }
 
 impl GithubUserSocialConnection {
-    pub fn new(provider_id: String, created_at: String, last_login_at: String, provider_identifier: String) -> GithubUserSocialConnection {
+    pub fn new(
+        provider_id: String,
+        created_at: String,
+        last_login_at: String,
+        provider_identifier: String,
+    ) -> GithubUserSocialConnection {
         GithubUserSocialConnection {
             provider_id,
             created_at,
@@ -35,4 +40,3 @@ impl GithubUserSocialConnection {
         }
     }
 }
-

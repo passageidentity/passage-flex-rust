@@ -21,13 +21,10 @@ pub struct Model500Error {
 
 impl Model500Error {
     pub fn new(code: Code, error: String) -> Model500Error {
-        Model500Error {
-            code,
-            error,
-        }
+        Model500Error { code, error }
     }
 }
-/// 
+///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
     #[serde(rename = "internal_server_error")]
@@ -39,4 +36,3 @@ impl Default for Code {
         Self::InternalServerError
     }
 }
-

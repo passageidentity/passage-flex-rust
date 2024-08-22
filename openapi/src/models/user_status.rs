@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// 
+///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum UserStatus {
     #[serde(rename = "active")]
@@ -20,7 +20,6 @@ pub enum UserStatus {
     Inactive,
     #[serde(rename = "pending")]
     Pending,
-
 }
 
 impl std::fmt::Display for UserStatus {
@@ -38,4 +37,3 @@ impl Default for UserStatus {
         Self::Active
     }
 }
-

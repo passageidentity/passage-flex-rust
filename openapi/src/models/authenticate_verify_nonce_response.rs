@@ -20,9 +20,6 @@ pub struct AuthenticateVerifyNonceResponse {
 
 impl AuthenticateVerifyNonceResponse {
     pub fn new(external_id: String) -> AuthenticateVerifyNonceResponse {
-        AuthenticateVerifyNonceResponse {
-            external_id,
-        }
+        AuthenticateVerifyNonceResponse { external_id }
     }
 }
-

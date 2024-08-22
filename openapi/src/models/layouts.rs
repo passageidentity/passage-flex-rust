@@ -20,11 +20,13 @@ pub struct Layouts {
 }
 
 impl Layouts {
-    pub fn new(profile: Vec<models::LayoutConfig>, registration: Vec<models::LayoutConfig>) -> Layouts {
+    pub fn new(
+        profile: Vec<models::LayoutConfig>,
+        registration: Vec<models::LayoutConfig>,
+    ) -> Layouts {
         Layouts {
             profile,
             registration,
         }
     }
 }
-

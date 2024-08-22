@@ -21,13 +21,10 @@ pub struct Model409Error {
 
 impl Model409Error {
     pub fn new(code: Code, error: String) -> Model409Error {
-        Model409Error {
-            code,
-            error,
-        }
+        Model409Error { code, error }
     }
 }
-/// 
+///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
     #[serde(rename = "user_already_admin")]
@@ -43,4 +40,3 @@ impl Default for Code {
         Self::AlreadyAdmin
     }
 }
-

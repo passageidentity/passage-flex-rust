@@ -19,9 +19,6 @@ pub struct ListDevicesResponse {
 
 impl ListDevicesResponse {
     pub fn new(devices: Vec<models::WebAuthnDevices>) -> ListDevicesResponse {
-        ListDevicesResponse {
-            devices,
-        }
+        ListDevicesResponse { devices }
     }
 }
-

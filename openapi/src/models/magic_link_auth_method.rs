@@ -23,7 +23,11 @@ pub struct MagicLinkAuthMethod {
 }
 
 impl MagicLinkAuthMethod {
-    pub fn new(enabled: bool, ttl: i32, ttl_display_unit: models::TtlDisplayUnit) -> MagicLinkAuthMethod {
+    pub fn new(
+        enabled: bool,
+        ttl: i32,
+        ttl_display_unit: models::TtlDisplayUnit,
+    ) -> MagicLinkAuthMethod {
         MagicLinkAuthMethod {
             enabled,
             ttl,
@@ -31,4 +35,3 @@ impl MagicLinkAuthMethod {
         }
     }
 }
-

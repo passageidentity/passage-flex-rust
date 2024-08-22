@@ -26,7 +26,13 @@ pub struct PaginatedLinks {
 }
 
 impl PaginatedLinks {
-    pub fn new(first: models::Link, last: models::Link, next: models::Link, previous: models::Link, param_self: models::Link) -> PaginatedLinks {
+    pub fn new(
+        first: models::Link,
+        last: models::Link,
+        next: models::Link,
+        previous: models::Link,
+        param_self: models::Link,
+    ) -> PaginatedLinks {
         PaginatedLinks {
             first: Box::new(first),
             last: Box::new(last),
@@ -36,4 +42,3 @@ impl PaginatedLinks {
         }
     }
 }
-

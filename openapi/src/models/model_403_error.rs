@@ -21,13 +21,10 @@ pub struct Model403Error {
 
 impl Model403Error {
     pub fn new(code: Code, error: String) -> Model403Error {
-        Model403Error {
-            code,
-            error,
-        }
+        Model403Error { code, error }
     }
 }
-/// 
+///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
     #[serde(rename = "cannot_create_organization_billing_portal_session")]
@@ -49,4 +46,3 @@ impl Default for Code {
         Self::CannotCreateOrganizationBillingPortalSession
     }
 }
-

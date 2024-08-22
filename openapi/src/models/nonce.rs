@@ -21,9 +21,6 @@ pub struct Nonce {
 impl Nonce {
     /// the nonce to exchange for an authentication token
     pub fn new(nonce: String) -> Nonce {
-        Nonce {
-            nonce,
-        }
+        Nonce { nonce }
     }
 }
-

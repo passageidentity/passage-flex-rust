@@ -41,7 +41,17 @@ pub struct WebAuthnDevices {
 }
 
 impl WebAuthnDevices {
-    pub fn new(created_at: String, cred_id: String, friendly_name: String, id: String, last_login_at: String, r#type: models::WebAuthnType, updated_at: String, usage_count: i32, icons: models::WebAuthnIcons) -> WebAuthnDevices {
+    pub fn new(
+        created_at: String,
+        cred_id: String,
+        friendly_name: String,
+        id: String,
+        last_login_at: String,
+        r#type: models::WebAuthnType,
+        updated_at: String,
+        usage_count: i32,
+        icons: models::WebAuthnIcons,
+    ) -> WebAuthnDevices {
         WebAuthnDevices {
             created_at,
             cred_id,
@@ -55,4 +65,3 @@ impl WebAuthnDevices {
         }
     }
 }
-

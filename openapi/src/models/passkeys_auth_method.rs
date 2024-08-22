@@ -19,9 +19,6 @@ pub struct PasskeysAuthMethod {
 
 impl PasskeysAuthMethod {
     pub fn new(enabled: bool) -> PasskeysAuthMethod {
-        PasskeysAuthMethod {
-            enabled,
-        }
+        PasskeysAuthMethod { enabled }
     }
 }
-

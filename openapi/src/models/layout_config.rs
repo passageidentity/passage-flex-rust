@@ -27,13 +27,6 @@ pub struct LayoutConfig {
 
 impl LayoutConfig {
     pub fn new(h: i32, id: String, w: i32, x: i32, y: i32) -> LayoutConfig {
-        LayoutConfig {
-            h,
-            id,
-            w,
-            x,
-            y,
-        }
+        LayoutConfig { h, id, w, x, y }
     }
 }
-

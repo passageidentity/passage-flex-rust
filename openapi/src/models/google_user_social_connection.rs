@@ -26,7 +26,12 @@ pub struct GoogleUserSocialConnection {
 }
 
 impl GoogleUserSocialConnection {
-    pub fn new(provider_id: String, created_at: String, last_login_at: String, provider_identifier: String) -> GoogleUserSocialConnection {
+    pub fn new(
+        provider_id: String,
+        created_at: String,
+        last_login_at: String,
+        provider_identifier: String,
+    ) -> GoogleUserSocialConnection {
         GoogleUserSocialConnection {
             provider_id,
             created_at,
@@ -35,4 +40,3 @@ impl GoogleUserSocialConnection {
         }
     }
 }
-

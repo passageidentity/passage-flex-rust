@@ -104,7 +104,44 @@ pub struct AppInfo {
 }
 
 impl AppInfo {
-    pub fn new(additional_auth_origins: Vec<String>, allowed_callback_urls: Vec<String>, allowed_identifier: String, allowed_logout_urls: Vec<String>, application_login_uri: String, auth_fallback_method: String, auth_fallback_method_ttl: i32, auth_methods: models::AuthMethods, auth_origin: String, auto_theme_enabled: bool, created_at: String, default_language: String, id: String, layouts: models::Layouts, login_url: String, name: String, hosted: bool, hosted_subdomain: String, passage_branding: bool, profile_management: bool, public_signup: bool, redirect_url: String, refresh_absolute_lifetime: i32, refresh_enabled: bool, refresh_inactivity_lifetime: i32, require_email_verification: bool, require_identifier_verification: bool, required_identifier: String, role: String, rsa_public_key: String, session_timeout_length: i32, r#type: Type, user_metadata_schema: Vec<models::UserMetadataField>, technologies: Vec<models::Technologies>, element_customization: models::ElementCustomization, element_customization_dark: models::ElementCustomization) -> AppInfo {
+    pub fn new(
+        additional_auth_origins: Vec<String>,
+        allowed_callback_urls: Vec<String>,
+        allowed_identifier: String,
+        allowed_logout_urls: Vec<String>,
+        application_login_uri: String,
+        auth_fallback_method: String,
+        auth_fallback_method_ttl: i32,
+        auth_methods: models::AuthMethods,
+        auth_origin: String,
+        auto_theme_enabled: bool,
+        created_at: String,
+        default_language: String,
+        id: String,
+        layouts: models::Layouts,
+        login_url: String,
+        name: String,
+        hosted: bool,
+        hosted_subdomain: String,
+        passage_branding: bool,
+        profile_management: bool,
+        public_signup: bool,
+        redirect_url: String,
+        refresh_absolute_lifetime: i32,
+        refresh_enabled: bool,
+        refresh_inactivity_lifetime: i32,
+        require_email_verification: bool,
+        require_identifier_verification: bool,
+        required_identifier: String,
+        role: String,
+        rsa_public_key: String,
+        session_timeout_length: i32,
+        r#type: Type,
+        user_metadata_schema: Vec<models::UserMetadataField>,
+        technologies: Vec<models::Technologies>,
+        element_customization: models::ElementCustomization,
+        element_customization_dark: models::ElementCustomization,
+    ) -> AppInfo {
         AppInfo {
             additional_auth_origins,
             allowed_callback_urls,
@@ -149,7 +186,7 @@ impl AppInfo {
         }
     }
 }
-/// 
+///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Type {
     #[serde(rename = "complete")]
@@ -163,4 +200,3 @@ impl Default for Type {
         Self::Complete
     }
 }
-

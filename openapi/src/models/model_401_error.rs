@@ -21,13 +21,10 @@ pub struct Model401Error {
 
 impl Model401Error {
     pub fn new(code: Code, error: String) -> Model401Error {
-        Model401Error {
-            code,
-            error,
-        }
+        Model401Error { code, error }
     }
 }
-/// 
+///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
     #[serde(rename = "invalid_access_token")]
@@ -41,4 +38,3 @@ impl Default for Code {
         Self::AccessToken
     }
 }
-

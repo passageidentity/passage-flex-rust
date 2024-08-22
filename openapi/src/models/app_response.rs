@@ -19,9 +19,6 @@ pub struct AppResponse {
 
 impl AppResponse {
     pub fn new(app: models::AppInfo) -> AppResponse {
-        AppResponse {
-            app: Box::new(app),
-        }
+        AppResponse { app: Box::new(app) }
     }
 }
-

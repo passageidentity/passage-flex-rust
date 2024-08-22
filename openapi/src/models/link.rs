@@ -19,9 +19,6 @@ pub struct Link {
 
 impl Link {
     pub fn new(href: String) -> Link {
-        Link {
-            href,
-        }
+        Link { href }
     }
 }
-

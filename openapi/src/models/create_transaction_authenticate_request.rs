@@ -20,9 +20,6 @@ pub struct CreateTransactionAuthenticateRequest {
 
 impl CreateTransactionAuthenticateRequest {
     pub fn new(external_id: String) -> CreateTransactionAuthenticateRequest {
-        CreateTransactionAuthenticateRequest {
-            external_id,
-        }
+        CreateTransactionAuthenticateRequest { external_id }
     }
 }
-

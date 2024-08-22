@@ -41,7 +41,20 @@ pub struct ListPaginatedUsersItem {
 }
 
 impl ListPaginatedUsersItem {
-    pub fn new(created_at: String, email: String, email_verified: bool, external_id: String, id: String, last_login_at: String, login_count: i32, phone: String, phone_verified: bool, status: models::UserStatus, updated_at: String, user_metadata: Option<serde_json::Value>) -> ListPaginatedUsersItem {
+    pub fn new(
+        created_at: String,
+        email: String,
+        email_verified: bool,
+        external_id: String,
+        id: String,
+        last_login_at: String,
+        login_count: i32,
+        phone: String,
+        phone_verified: bool,
+        status: models::UserStatus,
+        updated_at: String,
+        user_metadata: Option<serde_json::Value>,
+    ) -> ListPaginatedUsersItem {
         ListPaginatedUsersItem {
             created_at,
             email,
@@ -58,4 +71,3 @@ impl ListPaginatedUsersItem {
         }
     }
 }
-

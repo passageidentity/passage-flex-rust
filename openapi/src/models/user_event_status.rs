@@ -11,14 +11,13 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// 
+///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum UserEventStatus {
     #[serde(rename = "complete")]
     Complete,
     #[serde(rename = "incomplete")]
     Incomplete,
-
 }
 
 impl std::fmt::Display for UserEventStatus {
@@ -35,4 +34,3 @@ impl Default for UserEventStatus {
         Self::Complete
     }
 }
-

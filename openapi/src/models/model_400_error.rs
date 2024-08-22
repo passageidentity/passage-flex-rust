@@ -21,13 +21,10 @@ pub struct Model400Error {
 
 impl Model400Error {
     pub fn new(code: Code, error: String) -> Model400Error {
-        Model400Error {
-            code,
-            error,
-        }
+        Model400Error { code, error }
     }
 }
-/// 
+///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
     #[serde(rename = "invalid_request")]
@@ -41,4 +38,3 @@ impl Default for Code {
         Self::InvalidRequest
     }
 }
-

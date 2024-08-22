@@ -28,7 +28,14 @@ pub struct UserMetadataField {
 }
 
 impl UserMetadataField {
-    pub fn new(field_name: String, friendly_name: String, id: String, profile: bool, registration: bool, r#type: models::UserMetadataFieldType) -> UserMetadataField {
+    pub fn new(
+        field_name: String,
+        friendly_name: String,
+        id: String,
+        profile: bool,
+        registration: bool,
+        r#type: models::UserMetadataFieldType,
+    ) -> UserMetadataField {
         UserMetadataField {
             field_name,
             friendly_name,
@@ -39,4 +46,3 @@ impl UserMetadataField {
         }
     }
 }
-

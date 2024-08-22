@@ -52,7 +52,25 @@ pub struct UserInfo {
 }
 
 impl UserInfo {
-    pub fn new(created_at: String, email: String, email_verified: bool, external_id: String, id: String, last_login_at: String, login_count: i32, phone: String, phone_verified: bool, recent_events: Vec<models::UserRecentEvent>, social_connections: models::UserSocialConnections, status: models::UserStatus, updated_at: String, user_metadata: Option<serde_json::Value>, webauthn: bool, webauthn_devices: Vec<models::WebAuthnDevices>, webauthn_types: Vec<models::WebAuthnType>) -> UserInfo {
+    pub fn new(
+        created_at: String,
+        email: String,
+        email_verified: bool,
+        external_id: String,
+        id: String,
+        last_login_at: String,
+        login_count: i32,
+        phone: String,
+        phone_verified: bool,
+        recent_events: Vec<models::UserRecentEvent>,
+        social_connections: models::UserSocialConnections,
+        status: models::UserStatus,
+        updated_at: String,
+        user_metadata: Option<serde_json::Value>,
+        webauthn: bool,
+        webauthn_devices: Vec<models::WebAuthnDevices>,
+        webauthn_types: Vec<models::WebAuthnType>,
+    ) -> UserInfo {
         UserInfo {
             created_at,
             email,
@@ -74,4 +92,3 @@ impl UserInfo {
         }
     }
 }
-

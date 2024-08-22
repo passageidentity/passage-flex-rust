@@ -20,9 +20,6 @@ pub struct CreateTransactionResponse {
 
 impl CreateTransactionResponse {
     pub fn new(transaction_id: String) -> CreateTransactionResponse {
-        CreateTransactionResponse {
-            transaction_id,
-        }
+        CreateTransactionResponse { transaction_id }
     }
 }
-

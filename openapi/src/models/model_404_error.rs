@@ -21,13 +21,10 @@ pub struct Model404Error {
 
 impl Model404Error {
     pub fn new(code: Code, error: String) -> Model404Error {
-        Model404Error {
-            code,
-            error,
-        }
+        Model404Error { code, error }
     }
 }
-/// 
+///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
     #[serde(rename = "admin_not_found")]
@@ -73,4 +70,3 @@ impl Default for Code {
         Self::AdminNotFound
     }
 }
-

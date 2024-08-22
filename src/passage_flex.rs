@@ -130,7 +130,7 @@ impl PassageFlex {
     ) -> Result<Vec<models::WebAuthnDevices>, Error> {
         let user = match self.get_user(external_id).await {
             Ok(user) => user,
-            Err(e) => return Err(e.into()),
+            Err(e) => return Err(e),
         };
 
         user_devices_api::list_user_devices(&self.configuration, &user.id)
@@ -143,7 +143,7 @@ impl PassageFlex {
     pub async fn revoke_device(&self, external_id: String, device_id: String) -> Result<(), Error> {
         let user = match self.get_user(external_id).await {
             Ok(user) => user,
-            Err(e) => return Err(e.into()),
+            Err(e) => return Err(e),
         };
 
         user_devices_api::delete_user_devices(&self.configuration, &user.id, &device_id)

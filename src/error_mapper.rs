@@ -150,7 +150,6 @@ impl From<openapi::models::model_403_error::Model403Error> for Error {
 impl From<openapi::models::model_404_error::Model404Error> for Error {
     fn from(e: openapi::models::model_404_error::Model404Error) -> Self {
         match e.code {
-            openapi::models::model_404_error::Code::AppNotFound => Error::AppNotFound,
             openapi::models::model_404_error::Code::DeviceNotFound => Error::DeviceNotFound,
             openapi::models::model_404_error::Code::UserNotFound => Error::UserNotFound,
             _ => Error::Other(e.error),

@@ -9,6 +9,8 @@ pub struct PassageFlex {
     configuration: Configuration,
 }
 
+const SERVER_URL: &str = "https://api.passage.id";
+
 impl PassageFlex {
     /// Initialize the PassageFlex client
     pub fn new(app_id: String, api_key: String) -> Self {
@@ -34,7 +36,7 @@ impl PassageFlex {
             configuration,
         };
         // Set the default server URL
-        client.set_server_url("https://api.passage.id".to_string());
+        client.set_server_url(SERVER_URL.to_string());
 
         client
     }

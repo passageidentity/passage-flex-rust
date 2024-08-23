@@ -42,5 +42,4 @@ impl fmt::Display for Error {
 mod error;
 
 pub mod passage_flex;
-pub use openapi::apis::transactions_api::CreateRegisterTransactionError;
 pub use passage_flex::PassageFlex;

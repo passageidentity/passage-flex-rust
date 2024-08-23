@@ -33,7 +33,7 @@ jobs:
       
       - name: Get version
         id: get_version
-        run: echo "version=$(cat Cargo.toml | grep version | head -n1 | cut -d '"' -f2)" >> "$GITHUB_OUTPUT"
+        run: echo "version=$(grep version Cargo.toml | head -n1 | cut -d '"' -f2)" >> "$GITHUB_OUTPUT"
 
       - uses: rickstaa/action-create-tag@v1
         id: tag_create
@@ -41,7 +41,7 @@ jobs:
           tag: v${{ steps.get_version.outputs.version }}
 
       - name: Create Release
-        if: !steps.tag_create.outputs.tag_exists
+        if: ${{ !steps.tag_create.outputs.tag_exists }}
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

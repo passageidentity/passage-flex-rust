@@ -148,7 +148,7 @@ To revoke a user's passkey device, use the `revoke_device` method.
 
 ```rust
 use passage_flex::PassageFlex;
-use chrono::{DateTime, NaiveDate, Utc};
+use chrono::{Duration, NaiveDate, Utc};
 
 let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_APP_ID").unwrap(),
@@ -157,7 +157,7 @@ let passage_flex = PassageFlex::new(
 
 // this should be the same value you used when creating the transaction
 let external_id = your_user.id;
-let last_year = Utc::now().naive_utc().date() - chrono::Duration::days(365);
+let last_year = Utc::now().naive_utc().date() - Duration::days(365);
 
 // get devices
 let passkey_devices = passage_flex.get_devices(external_id.clone()).await.unwrap();

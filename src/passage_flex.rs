@@ -94,8 +94,8 @@ impl PassageFlex {
             .map_err(Into::into)
     }
 
-    /// Get a user by their external ID
-    pub async fn get_user(&self, external_id: String) -> Result<Box<UserInfo>, Error> {
+    /// Get a user's ID in Passage by their external ID
+    async fn get_id(&self, external_id: String) -> Result<String, Error> {
         let users = users_api::list_paginated_users(
             &self.configuration,
             Some(1),
@@ -111,19 +111,26 @@ impl PassageFlex {
             None,
         )
         .await
-        .map(|response| response.users);
+        .map(|response| response.users)
+        .map_err(Into::into);
 
         match users {
             Ok(mut users) => match users.len() {
                 0 => Err(Error::UserNotFound),
                 1 => {
                     let user = users.remove(0);
-                    self.get_user_by_id(user.id).await
+                    Ok(user.id)
                 }
                 _ => Err(Error::Other("Multiple users found".to_string())),
             },
-            Err(e) => Err(e.into()),
+            Err(e) => Err(e),
         }
+    }
+
+    /// Get a user by their external ID
+    pub async fn get_user(&self, external_id: String) -> Result<Box<UserInfo>, Error> {
+        let user_id = self.get_id(external_id).await?;
+        self.get_user_by_id(user_id).await
     }
 
     /// Get a user's devices by their external ID
@@ -131,12 +138,8 @@ impl PassageFlex {
         &self,
         external_id: String,
     ) -> Result<Vec<models::WebAuthnDevices>, Error> {
-        let user = match self.get_user(external_id).await {
-            Ok(user) => user,
-            Err(e) => return Err(e),
-        };
-
-        user_devices_api::list_user_devices(&self.configuration, &user.id)
+        let user_id = self.get_id(external_id).await?;
+        user_devices_api::list_user_devices(&self.configuration, &user_id)
             .await
             .map(|response| response.devices)
             .map_err(Into::into)
@@ -144,12 +147,8 @@ impl PassageFlex {
 
     /// Revoke a user's device by their external ID and the device ID
     pub async fn revoke_device(&self, external_id: String, device_id: String) -> Result<(), Error> {
-        let user = match self.get_user(external_id).await {
-            Ok(user) => user,
-            Err(e) => return Err(e),
-        };
-
-        user_devices_api::delete_user_devices(&self.configuration, &user.id, &device_id)
+        let user_id = self.get_id(external_id).await?;
+        user_devices_api::delete_user_devices(&self.configuration, &user_id, &device_id)
             .await
             .map_err(Into::into)
     }

@@ -43,7 +43,7 @@ jobs:
           tag: v${{ steps.get_version.outputs.version }}
 
       - name: Create Release
-        if: ${{ !steps.tag_create.outputs.tag_exists }}
+        if: ${{ steps.tag_create.outputs.tag_exists != 'true' }}
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

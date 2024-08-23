@@ -1,4 +1,4 @@
-name: Publish to crate.io
+name: Publish to crates.io
 
 on:
   workflow_dispatch:
@@ -33,7 +33,9 @@ jobs:
       
       - name: Get version
         id: get_version
-        run: echo "version=$(grep version Cargo.toml | head -n1 | cut -d '"' -f2)" >> "$GITHUB_OUTPUT"
+        run: |
+          version=$(grep version Cargo.toml | head -n1 | cut -d '"' -f2)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - uses: rickstaa/action-create-tag@v1
         id: tag_create
@@ -41,7 +43,7 @@ jobs:
           tag: v${{ steps.get_version.outputs.version }}
 
       - name: Create Release
-        if: ${{ !steps.tag_create.outputs.tag_exists }}
+        if: ${{ steps.tag_create.outputs.tag_exists != 'true' }}
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

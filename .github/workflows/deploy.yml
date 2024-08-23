@@ -32,29 +32,19 @@ jobs:
           fetch-depth: 0
       
       - name: Get version
-        run: echo "VERSION=$(cat Cargo.toml | grep version | head -n1 | cut -d '"' -f2)" >> "$GITHUB_ENV"
+        id: get_version
+        run: echo "version=$(cat Cargo.toml | grep version | head -n1 | cut -d '"' -f2)" >> "$GITHUB_OUTPUT"
 
       - uses: rickstaa/action-create-tag@v1
         id: tag_create
         with:
-          tag: v${{ env.VERSION }}
-
-      - name: Check if release is needed
-        id: check
-        run: |
-          last_version=$(git describe --tags --abbrev=0)
-          if [[ "$VERSION" == "$last_version" ]]; then
-            # no release needed
-            echo "create_release=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "create_release=true" >> "$GITHUB_OUTPUT"
-          fi
+          tag: v${{ steps.get_version.outputs.version }}
 
       - name: Create Release
-        if: steps.check.outputs.create_release == 'true'
+        if: !steps.tag_create.outputs.tag_exists
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ env.VERSION }}
-          release_name: v${{ env.VERSION }}
+          tag_name: v${{ steps.get_version.outputs.version }}
+          release_name: v${{ steps.get_version.outputs.version }}

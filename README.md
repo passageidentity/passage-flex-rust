@@ -91,7 +91,8 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
-let nonce = "a unique single-use value received from the client after a passkey ceremony".to_string()
+let nonce =
+    "a unique single-use value received from the client after a passkey ceremony".to_string();
 
 match passage_flex.verify_nonce(nonce).await {
     Ok(external_id) => {

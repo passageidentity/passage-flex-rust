@@ -167,7 +167,7 @@ for device in passkey_devices {
     let last_login_at_parsed =
         NaiveDate::parse_from_str(&device.last_login_at, "%Y-%m-%dT%H:%M:%S%z").unwrap();
 
-    if device.usage_count == 0 && last_login_at_parsed < last_year {
+    if last_login_at_parsed < last_year {
         if let Err(err) = passage_flex
             .revoke_device(external_id.clone(), device.id)
             .await

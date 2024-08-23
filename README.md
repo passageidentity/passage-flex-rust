@@ -10,7 +10,7 @@ cargo add passage_flex
 
 ## Create a PassageFlex instance
 
-A Passage AppID and API key are required. The API key can be created in the Passage Console under your Application Settings. This API key grants access to the Passage management APIs to get and update information about users. This API key must be protected and stored in an appropriate secure storage location. It should never be hard-coded in the repository.
+A Passage AppID and API key are required. An App and AppID can be created in the Passage Console, and an API key can be created under your Application Settings. This API key grants access to the Passage management APIs to get and update information about users. This API key must be protected and stored in an appropriate secure storage location. It should never be hard-coded in the repository.
 
 ```rust
 use passage_flex::PassageFlex;
@@ -39,7 +39,7 @@ println!("{}", app_info.auth_origin);
 
 ## Create a registration transaction
 
-To create a transaction to kick off a user passkey registration, use the `create_register_transaction` method.
+To create a transaction to start a user passkey registration, use the `create_register_transaction` method.
 
 ```rust
 use passage_flex::PassageFlex;
@@ -60,7 +60,7 @@ let transaction = passage_flex
 
 ## Create an authentication transaction
 
-To create a transaction to kick off a user passkey authentication, use the `create_authenticate_transaction` method.
+To create a transaction to start a user passkey authentication, use the `create_authenticate_transaction` method.
 
 ```rust
 use passage_flex::PassageFlex;
@@ -163,7 +163,7 @@ let last_year = Utc::now().naive_utc().date() - Duration::days(365);
 let passkey_devices = passage_flex.get_devices(external_id.clone()).await.unwrap();
 
 for device in passkey_devices {
-    // revoke old devices that haven't been used
+    // revoke old devices that haven't been used in the last year
     let last_login_at_parsed =
         NaiveDate::parse_from_str(&device.last_login_at, "%Y-%m-%dT%H:%M:%S%z").unwrap();
 

@@ -1,6 +1,6 @@
 [package]
 name = "passage_flex"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["support@passage.id"]
 description = "Provides verification of server-side authentication for applications using Passage Passkey Flex"

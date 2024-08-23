@@ -1,3 +1,20 @@
+//! This crate provides a Rust SDK for Passage Passkey Flex, a service that enables server-side
+//! authentication for applications using WebAuthn passkeys.
+//!
+//! # Examples
+//!
+//! ```ignore
+//! use passage_flex::PassageFlex;
+//!
+//! let passage_flex = PassageFlex::new(
+//!     std::env::var("PASSAGE_APP_ID").unwrap(),
+//!     std::env::var("PASSAGE_API_KEY").unwrap(),
+//! );
+//!
+//! let app_info = passage_flex.get_app().await.unwrap();
+//! println!("{}", app_info.auth_origin);
+//! ```
+
 use std::fmt;
 
 extern crate reqwest;

@@ -12,7 +12,23 @@ pub struct PassageFlex {
 const SERVER_URL: &str = "https://api.passage.id";
 
 impl PassageFlex {
-    /// Initialize the PassageFlex client
+    /// Creates a new instance of the `PassageFlex` client.
+    ///
+    /// # Arguments
+    ///
+    /// * `app_id` - The Passage application ID.
+    /// * `api_key` - The Passage API key.
+    ///
+    /// # Examples
+    ///
+    /// ```ignore
+    /// use passage_flex::PassageFlex;
+    ///
+    /// let passage_flex = PassageFlex::new(
+    ///     std::env::var("PASSAGE_APP_ID").unwrap(),
+    ///     std::env::var("PASSAGE_API_KEY").unwrap(),
+    /// );
+    /// ```
     pub fn new(app_id: String, api_key: String) -> Self {
         let mut configuration = Configuration::new();
         // Use the api_key as the bearer access token
@@ -46,7 +62,25 @@ impl PassageFlex {
         self.configuration.base_path = format!("{}/v1/apps/{}", server_url, self.app_id);
     }
 
-    /// Get the app information
+    /// Retrieves information about the application.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing the `AppInfo` struct or an `Error`.
+    ///
+    /// # Examples
+    ///
+    /// ```ignore
+    /// use passage_flex::PassageFlex;
+    ///
+    /// let passage_flex = PassageFlex::new(
+    ///     std::env::var("PASSAGE_APP_ID").unwrap(),
+    ///     std::env::var("PASSAGE_API_KEY").unwrap(),
+    /// );
+    ///
+    /// let app_info = passage_flex.get_app().await.unwrap();
+    /// println!("{}", app_info.auth_origin);
+    /// ```
     pub async fn get_app(&self) -> Result<Box<AppInfo>, Error> {
         apps_api::get_app(&self.configuration)
             .await
@@ -54,7 +88,35 @@ impl PassageFlex {
             .map_err(Into::into)
     }
 
-    /// Create a transaction to start a user's registration process
+    /// Creates a transaction to start a user's registration process.
+    ///
+    /// # Arguments
+    ///
+    /// * `external_id` - A unique, immutable string that represents the user.
+    /// * `passkey_display_name` - The label for the user's passkey that they will see when logging in.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing the transaction ID as a string or an `Error`.
+    ///
+    /// # Examples
+    ///
+    /// ```ignore
+    /// use passage_flex::PassageFlex;
+    ///
+    /// let passage_flex = PassageFlex::new(
+    ///     std::env::var("PASSAGE_APP_ID").unwrap(),
+    ///     std::env::var("PASSAGE_API_KEY").unwrap(),
+    /// );
+    ///
+    /// let transaction = passage_flex
+    ///     .create_register_transaction(
+    ///         "00000000-0000-0000-0000-000000000001".to_string(),
+    ///         "user@example.com".to_string(),
+    ///     )
+    ///     .await
+    ///     .unwrap();
+    /// ```
     pub async fn create_register_transaction(
         &self,
         external_id: String,
@@ -72,7 +134,33 @@ impl PassageFlex {
         .map_err(Into::into)
     }
 
-    /// Create a transaction to start a user's authentication process
+    /// Creates a transaction to start a user's authentication process.
+    ///
+    /// # Arguments
+    ///
+    /// * `external_id` - A unique, immutable string that represents the user.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing the transaction ID as a string or an `Error`.
+    ///
+    /// # Examples
+    ///
+    /// ```ignore
+    /// use passage_flex::PassageFlex;
+    ///
+    /// let passage_flex = PassageFlex::new(
+    ///     std::env::var("PASSAGE_APP_ID").unwrap(),
+    ///     std::env::var("PASSAGE_API_KEY").unwrap(),
+    /// );
+    ///
+    /// let transaction = passage_flex
+    ///     .create_authenticate_transaction(
+    ///         "00000000-0000-0000-0000-000000000001".to_string(),
+    ///     )
+    ///     .await
+    ///     .unwrap();
+    /// ```
     pub async fn create_authenticate_transaction(
         &self,
         external_id: String,
@@ -86,7 +174,35 @@ impl PassageFlex {
         .map_err(Into::into)
     }
 
-    /// Verify the nonce received from a WebAuthn registration or authentication ceremony
+    /// Verifies the nonce received from a WebAuthn registration or authentication ceremony.
+    ///
+    /// # Arguments
+    ///
+    /// * `nonce` - The nonce string to be verified.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing the external ID as a string or an `Error`.
+    ///
+    /// # Examples
+    ///
+    /// ```ignore
+    /// use passage_flex::PassageFlex;
+    ///
+    /// let passage_flex = PassageFlex::new(
+    ///     std::env::var("PASSAGE_APP_ID").unwrap(),
+    ///     std::env::var("PASSAGE_API_KEY").unwrap(),
+    /// );
+    ///
+    /// match passage_flex.verify_nonce("nonce_string".to_string()).await {
+    ///     Ok(external_id) => {
+    ///         // use external_id to do things like generate and send your own auth token
+    ///     }
+    ///     Err(err) => {
+    ///         // nonce was invalid or unable to be verified
+    ///     }
+    /// }
+    /// ```
     pub async fn verify_nonce(&self, nonce: String) -> Result<String, Error> {
         authenticate_api::authenticate_verify_nonce(&self.configuration, models::Nonce { nonce })
             .await
@@ -127,13 +243,61 @@ impl PassageFlex {
         }
     }
 
-    /// Get a user by their external ID
+    /// Retrieves information about a user by their external ID.
+    ///
+    /// # Arguments
+    ///
+    /// * `external_id` - The unique, immutable ID that represents the user.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing the `UserInfo` struct or an `Error`.
+    ///
+    /// # Examples
+    ///
+    /// ```ignore
+    /// use passage_flex::PassageFlex;
+    ///
+    /// let passage_flex = PassageFlex::new(
+    ///     std::env::var("PASSAGE_APP_ID").unwrap(),
+    ///     std::env::var("PASSAGE_API_KEY").unwrap(),
+    /// );
+    ///
+    /// let external_id = "00000000-0000-0000-0000-000000000001";
+    /// let user_info = passage_flex.get_user(external_id.to_string()).await.unwrap();
+    /// println!("{:?}", user_info.id);
+    /// ```
     pub async fn get_user(&self, external_id: String) -> Result<Box<UserInfo>, Error> {
         let user_id = self.get_id(external_id).await?;
         self.get_user_by_id(user_id).await
     }
 
-    /// Get a user's devices by their external ID
+    /// Retrieves information about a user's passkey devices.
+    ///
+    /// # Arguments
+    ///
+    /// * `external_id` - The unique, immutable ID that represents the user.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing a vector of `WebAuthnDevices` or an `Error`.
+    ///
+    /// # Examples
+    ///
+    /// ```ignore
+    /// use passage_flex::PassageFlex;
+    ///
+    /// let passage_flex = PassageFlex::new(
+    ///     std::env::var("PASSAGE_APP_ID").unwrap(),
+    ///     std::env::var("PASSAGE_API_KEY").unwrap(),
+    /// );
+    ///
+    /// let external_id = "00000000-0000-0000-0000-000000000001";
+    /// let passkey_devices = passage_flex.get_devices(external_id.to_string()).await.unwrap();
+    /// for device in passkey_devices {
+    ///     println!("{}", device.usage_count);
+    /// }
+    /// ```
     pub async fn get_devices(
         &self,
         external_id: String,
@@ -145,7 +309,47 @@ impl PassageFlex {
             .map_err(Into::into)
     }
 
-    /// Revoke a user's device by their external ID and the device ID
+    /// Revokes a user's passkey device.
+    ///
+    /// # Arguments
+    ///
+    /// * `external_id` - The unique, immutable ID that represents the user.
+    /// * `device_id` - The ID of the device to be revoked.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing `()` or an `Error`.
+    ///
+    /// # Examples
+    ///
+    /// ```ignore
+    /// use passage_flex::PassageFlex;
+    /// use chrono::{Duration, NaiveDate, Utc};
+    ///
+    /// let passage_flex = PassageFlex::new(
+    ///     std::env::var("PASSAGE_APP_ID").unwrap(),
+    ///     std::env::var("PASSAGE_API_KEY").unwrap(),
+    /// );
+    ///
+    /// let external_id = "00000000-0000-0000-0000-000000000001";
+    /// let last_year = Utc::now().naive_utc().date() - Duration::days(365);
+    ///
+    /// let passkey_devices = passage_flex.get_devices(external_id.to_string()).await.unwrap();
+    ///
+    /// for device in passkey_devices {
+    ///     let last_login_at_parsed =
+    ///         NaiveDate::parse_from_str(&device.last_login_at, "%Y-%m-%dT%H:%M:%S%z").unwrap();
+    ///
+    ///     if last_login_at_parsed < last_year {
+    ///         if let Err(err) = passage_flex
+    ///             .revoke_device(external_id.clone(), device.id)
+    ///             .await
+    ///         {
+    ///             // device couldn't be revoked
+    ///         }
+    ///     }
+    /// }
+    /// ```
     pub async fn revoke_device(&self, external_id: String, device_id: String) -> Result<(), Error> {
         let user_id = self.get_id(external_id).await?;
         user_devices_api::delete_user_devices(&self.configuration, &user_id, &device_id)
@@ -153,7 +357,30 @@ impl PassageFlex {
             .map_err(Into::into)
     }
 
-    /// Get a user by their user ID
+    /// Retrieves information about a user by their user ID in Passage.
+    ///
+    /// # Arguments
+    ///
+    /// * `user_id` - The ID of the user in Passage.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing the `UserInfo` struct or an `Error`.
+    ///
+    /// # Examples
+    ///
+    /// ```ignore
+    /// use passage_flex::PassageFlex;
+    ///
+    /// let passage_flex = PassageFlex::new(
+    ///     std::env::var("PASSAGE_APP_ID").unwrap(),
+    ///     std::env::var("PASSAGE_API_KEY").unwrap(),
+    /// );
+    ///
+    /// let user_id = "user_id_string";
+    /// let user_info = passage_flex.get_user_by_id(user_id.to_string()).await.unwrap();
+    /// println!("{:?}", user_info.external_id);
+    /// ```
     pub async fn get_user_by_id(&self, user_id: String) -> Result<Box<UserInfo>, Error> {
         users_api::get_user(&self.configuration, &user_id)
             .await

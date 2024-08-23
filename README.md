@@ -1,6 +1,16 @@
 # passage_flex
 
-This Rust crate allows for verification of server-side authentication for applications using [Passage Passkey Flex](https://passage.id).
+<img src="https://storage.googleapis.com/passage-docs/passage-logo-gradient.svg" alt="Passage logo" style="width:250px;"/>
+
+![crates.io](https://img.shields.io/crates/v/passage_flex.svg)
+
+Passkey Flex provides passkey support for existing authentication systems. It abstracts the complexities of native passkey APIs and provides a simple, clean solution to take your authentication to the next level.
+
+The `passage_flex` Rust crate allows for verification of server-side authentication for applications using [Passage Passkey Flex](https://passage.id).
+
+For full documentation, visit the [Passkey Flex documentation here](https://docs-v2.passage.id/flex).
+
+## Installation
 
 Install this crate using cargo:
 

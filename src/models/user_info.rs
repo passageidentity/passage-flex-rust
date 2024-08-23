@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct UserInfo {
     #[serde(rename = "created_at")]
     pub created_at: String,
@@ -14,7 +14,7 @@ pub struct UserInfo {
     #[serde(rename = "login_count")]
     pub login_count: i32,
     #[serde(rename = "status")]
-    pub status: models::UserStatus,
+    pub status: crate::openapi::models::UserStatus,
     #[serde(rename = "updated_at")]
     pub updated_at: String,
     #[serde(rename = "user_metadata", deserialize_with = "Option::deserialize")]
@@ -22,8 +22,8 @@ pub struct UserInfo {
     #[serde(rename = "webauthn")]
     pub webauthn: bool,
     #[serde(rename = "webauthn_devices")]
-    pub webauthn_devices: Vec<models::WebAuthnDevices>,
+    pub webauthn_devices: Vec<crate::openapi::models::WebAuthnDevices>,
     /// List of credential types that have been used for authentication
     #[serde(rename = "webauthn_types")]
-    pub webauthn_types: Vec<models::WebAuthnType>,
+    pub webauthn_types: Vec<crate::openapi::models::WebAuthnType>,
 }

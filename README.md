@@ -8,7 +8,7 @@ Passkey Flex provides passkey support for existing authentication systems. It ab
 
 The `passage_flex` Rust crate allows for verification of server-side authentication for applications using [Passage Passkey Flex](https://passage.id).
 
-For full documentation, visit the [Passkey Flex documentation here](https://docs-v2.passage.id/flex).
+For full documentation, visit the [Passkey Flex Docs](https://docs-v2.passage.id/flex) and [Docs.rs](https://docs.rs/passage_flex/latest/passage_flex/) pages.
 
 ## Installation
 

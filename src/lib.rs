@@ -57,6 +57,7 @@ impl fmt::Display for Error {
 }
 
 mod error;
+mod models;
 mod openapi;
 
 pub mod passage_flex;

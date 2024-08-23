@@ -1,10 +1,9 @@
+use crate::models::{AppInfo, UserInfo};
 use crate::openapi::apis::configuration::Configuration;
 use crate::openapi::apis::{
     apps_api, authenticate_api, transactions_api, user_devices_api, users_api,
 };
-use crate::openapi::models;
 use crate::Error;
-use models::{AppInfo, UserInfo};
 
 pub struct PassageFlex {
     app_id: String,
@@ -86,7 +85,13 @@ impl PassageFlex {
     pub async fn get_app(&self) -> Result<Box<AppInfo>, Error> {
         apps_api::get_app(&self.configuration)
             .await
-            .map(|response| response.app)
+            .map(|response| {
+                Box::new(AppInfo {
+                    auth_origin: response.app.auth_origin,
+                    id: response.app.id,
+                    name: response.app.name,
+                })
+            })
             .map_err(Into::into)
     }
 
@@ -126,7 +131,7 @@ impl PassageFlex {
     ) -> Result<String, Error> {
         transactions_api::create_register_transaction(
             &self.configuration,
-            models::CreateTransactionRegisterRequest {
+            crate::openapi::models::CreateTransactionRegisterRequest {
                 external_id,
                 passkey_display_name,
             },
@@ -169,7 +174,7 @@ impl PassageFlex {
     ) -> Result<String, Error> {
         transactions_api::create_authenticate_transaction(
             &self.configuration,
-            models::CreateTransactionAuthenticateRequest { external_id },
+            crate::openapi::models::CreateTransactionAuthenticateRequest { external_id },
         )
         .await
         .map(|response| response.transaction_id)
@@ -206,10 +211,13 @@ impl PassageFlex {
     /// }
     /// ```
     pub async fn verify_nonce(&self, nonce: String) -> Result<String, Error> {
-        authenticate_api::authenticate_verify_nonce(&self.configuration, models::Nonce { nonce })
-            .await
-            .map(|response| response.external_id)
-            .map_err(Into::into)
+        authenticate_api::authenticate_verify_nonce(
+            &self.configuration,
+            crate::openapi::models::Nonce { nonce },
+        )
+        .await
+        .map(|response| response.external_id)
+        .map_err(Into::into)
     }
 
     /// Get a user's ID in Passage by their external ID
@@ -303,7 +311,7 @@ impl PassageFlex {
     pub async fn get_devices(
         &self,
         external_id: String,
-    ) -> Result<Vec<models::WebAuthnDevices>, Error> {
+    ) -> Result<Vec<crate::openapi::models::WebAuthnDevices>, Error> {
         let user_id = self.get_id(external_id).await?;
         user_devices_api::list_user_devices(&self.configuration, &user_id)
             .await
@@ -386,7 +394,21 @@ impl PassageFlex {
     pub async fn get_user_by_id(&self, user_id: String) -> Result<Box<UserInfo>, Error> {
         users_api::get_user(&self.configuration, &user_id)
             .await
-            .map(|response| response.user)
+            .map(|response| {
+                Box::new(UserInfo {
+                    created_at: response.user.created_at,
+                    external_id: response.user.external_id,
+                    id: response.user.id,
+                    last_login_at: response.user.last_login_at,
+                    login_count: response.user.login_count,
+                    status: response.user.status,
+                    updated_at: response.user.updated_at,
+                    user_metadata: response.user.user_metadata,
+                    webauthn: response.user.webauthn,
+                    webauthn_devices: response.user.webauthn_devices,
+                    webauthn_types: response.user.webauthn_types,
+                })
+            })
             .map_err(Into::into)
     }
 }

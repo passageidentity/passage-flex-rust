@@ -49,11 +49,12 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
+let external_id = "a unique immutable string that represents your user".to_string();
+let passkey_display_name =
+    "the label for the user's passkey that they will see when logging in".to_string();
+
 let transaction = passage_flex
-    .create_register_transaction(
-        "a unique immutable string that represents your user".to_string(),
-        "the label for the user's passkey that they will see when logging in".to_string(),
-    )
+    .create_register_transaction(external_id, passkey_display_name)
     .await
     .unwrap();
 ```
@@ -70,10 +71,10 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
+let external_id = "a unique immutable string that represents your user".to_string();
+
 let transaction = passage_flex
-    .create_authenticate_transaction(
-        "a unique immutable string that represents your user".to_string(),
-    )
+    .create_authenticate_transaction(external_id)
     .await
     .unwrap();
 ```
@@ -90,7 +91,7 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
-let nonce = "this should be received from the client".to_string()
+let nonce = "a unique single-use value received from the client after a passkey ceremony".to_string()
 
 match passage_flex.verify_nonce(nonce).await {
     Ok(external_id) => {

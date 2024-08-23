@@ -63,9 +63,6 @@ process_directory() {
     done
 }
 
-# Remove codegen output from previous run
-rm -rf ./openapi
-
 # Run codegen
 docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli:latest generate \
   -i "/local/$file" \
@@ -78,7 +75,8 @@ process_directory "openapi"
 
 
 # Move the generated ./openapi/src directory to crate source directory
-mv ./openapi/src/* ./src/openapi
+rm -rf ./src/openapi
+mv ./openapi/src ./src/openapi
 
 # Remove unused codegen output
 rm -rf ./openapi

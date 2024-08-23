@@ -90,7 +90,9 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
-match passage_flex.verify_nonce("nonce".to_string()).await {
+let nonce = "this should be received from the client".to_string()
+
+match passage_flex.verify_nonce(nonce).await {
     Ok(external_id) => {
         // use external_id to do things like generate and send your own auth token
     }

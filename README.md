@@ -115,7 +115,7 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
-// this should be the same value you used when creating the transaction
+// this is the same value used when creating a transaction
 let external_id = your_user.id;
 
 // get user info
@@ -135,7 +135,7 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
-// this should be the same value you used when creating the transaction
+// this is the same value used when creating a transaction
 let external_id = your_user.id;
 
 // get devices
@@ -158,7 +158,7 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
-// this should be the same value you used when creating the transaction
+// this is the same value used when creating a transaction
 let external_id = your_user.id;
 let last_year = Utc::now().naive_utc().date() - Duration::days(365);
 

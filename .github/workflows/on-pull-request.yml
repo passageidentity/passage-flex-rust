@@ -18,7 +18,7 @@ jobs:
       - name: Install clippy
         run: rustup component add clippy
       - name: Check linting
-        run: cargo clippy --all-targets --all-features -- -D warnings
+        cargo clippy --all-targets --all-features -- -D warnings
 
       - name: Install rustfmt
         run: rustup component add rustfmt

@@ -2,6 +2,12 @@
 name = "passage_flex"
 version = "0.1.0"
 edition = "2021"
+authors = ["support@passage.id"]
+description = "Provides verification of server-side authentication for applications using Passage Passkey Flex"
+homepage = "https://github.com/passageidentity/passage-flex-rust"
+repository = "https://github.com/passageidentity/passage-flex-rust"
+readme = "README.md"
+license = "MIT"
 
 [dependencies]
 http = "^1.1.0"

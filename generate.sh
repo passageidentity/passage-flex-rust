@@ -63,9 +63,6 @@ process_directory() {
     done
 }
 
-# Remove codegen output from previous run
-rm -rf ./openapi
-
 # Run codegen
 docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli:latest generate \
   -i "/local/$file" \
@@ -75,3 +72,22 @@ docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli:latest gen
 
 # Apply codemod to codegen
 process_directory "openapi"
+
+
+# Move the generated ./openapi/src directory to crate source directory
+rm -rf ./src/openapi
+mv ./openapi/src ./src/openapi
+
+# Remove unused codegen output
+rm -rf ./openapi
+
+# Rename lib.rs to mod.rs, to indicate it's a module
+mv ./src/openapi/lib.rs ./src/openapi/mod.rs
+
+# Add clippy & dead_code configuration to mod.rs
+tmpfile=$(mktemp)
+echo -e "#![allow(clippy::all)]\n#![allow(dead_code)]" > "$tmpfile"
+cat ./src/openapi/mod.rs >> "$tmpfile"
+mv "$tmpfile" ./src/openapi/mod.rs
+
+sed -i '' -E 's/crate::/crate::openapi::/g' ./src/openapi/**/*.rs

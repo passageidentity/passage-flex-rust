@@ -1,8 +1,10 @@
+use crate::openapi::apis::configuration::Configuration;
+use crate::openapi::apis::{
+    apps_api, authenticate_api, transactions_api, user_devices_api, users_api,
+};
+use crate::openapi::models;
 use crate::Error;
 use models::{AppInfo, UserInfo};
-use openapi::apis::configuration::Configuration;
-use openapi::apis::{apps_api, authenticate_api, transactions_api, user_devices_api, users_api};
-use openapi::models;
 
 pub struct PassageFlex {
     app_id: String,

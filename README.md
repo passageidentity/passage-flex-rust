@@ -10,7 +10,7 @@ cargo add passage_flex
 
 ## Create a PassageFlex instance
 
-A Passage AppID and API key are required. The API key can be created in the Passage Console under your Application Settings. This API key grants access to the Passage management APIs to get and update information about users. This API key must be protected and stored in an appropriate secure storage location. It should never be hard-coded in the repository.
+A Passage AppID and API key are required. An App and AppID can be created in the Passage Console, and an API key can be created under your Application Settings. This API key grants access to the Passage management APIs to get and update information about users. This API key must be protected and stored in an appropriate secure storage location. It should never be hard-coded in the repository.
 
 ```rust
 use passage_flex::PassageFlex;
@@ -39,7 +39,7 @@ println!("{}", app_info.auth_origin);
 
 ## Create a registration transaction
 
-To create a transaction to kick off a user passkey registration, use the `create_register_transaction` method.
+To create a transaction to start a user passkey registration, use the `create_register_transaction` method.
 
 ```rust
 use passage_flex::PassageFlex;
@@ -49,18 +49,19 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
+let external_id = "a unique immutable string that represents your user".to_string();
+let passkey_display_name =
+    "the label for the user's passkey that they will see when logging in".to_string();
+
 let transaction = passage_flex
-    .create_register_transaction(
-        "a unique immutable string that represents your user".to_string(),
-        "the label for the user's passkey that they will see when logging in".to_string(),
-    )
+    .create_register_transaction(external_id, passkey_display_name)
     .await
     .unwrap();
 ```
 
 ## Create an authentication transaction
 
-To create a transaction to kick off a user passkey authentication, use the `create_authenticate_transaction` method.
+To create a transaction to start a user passkey authentication, use the `create_authenticate_transaction` method.
 
 ```rust
 use passage_flex::PassageFlex;
@@ -70,10 +71,10 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
+let external_id = "a unique immutable string that represents your user".to_string();
+
 let transaction = passage_flex
-    .create_authenticate_transaction(
-        "a unique immutable string that represents your user".to_string(),
-    )
+    .create_authenticate_transaction(external_id)
     .await
     .unwrap();
 ```
@@ -90,7 +91,10 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
-match passage_flex.verify_nonce("nonce".to_string()).await {
+let nonce =
+    "a unique single-use value received from the client after a passkey ceremony".to_string();
+
+match passage_flex.verify_nonce(nonce).await {
     Ok(external_id) => {
         // use external_id to do things like generate and send your own auth token
     }
@@ -112,7 +116,7 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
-// this should be the same value you used when creating the transaction
+// this is the same value used when creating a transaction
 let external_id = your_user.id;
 
 // get user info
@@ -132,7 +136,7 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
-// this should be the same value you used when creating the transaction
+// this is the same value used when creating a transaction
 let external_id = your_user.id;
 
 // get devices
@@ -155,7 +159,7 @@ let passage_flex = PassageFlex::new(
     std::env::var("PASSAGE_API_KEY").unwrap(),
 );
 
-// this should be the same value you used when creating the transaction
+// this is the same value used when creating a transaction
 let external_id = your_user.id;
 let last_year = Utc::now().naive_utc().date() - Duration::days(365);
 
@@ -163,7 +167,7 @@ let last_year = Utc::now().naive_utc().date() - Duration::days(365);
 let passkey_devices = passage_flex.get_devices(external_id.clone()).await.unwrap();
 
 for device in passkey_devices {
-    // revoke old devices that haven't been used
+    // revoke old devices that haven't been used in the last year
     let last_login_at_parsed =
         NaiveDate::parse_from_str(&device.last_login_at, "%Y-%m-%dT%H:%M:%S%z").unwrap();
 

@@ -194,7 +194,7 @@ impl PassageFlex {
     ///     std::env::var("PASSAGE_API_KEY").unwrap(),
     /// );
     ///
-    /// match passage_flex.verify_nonce("nonce_string".to_string()).await {
+    /// match passage_flex.verify_nonce("01234567890123456789".to_string()).await {
     ///     Ok(external_id) => {
     ///         // use external_id to do things like generate and send your own auth token
     ///     }

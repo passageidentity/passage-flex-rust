@@ -8,6 +8,7 @@ homepage = "https://github.com/passageidentity/passage-flex-rust"
 repository = "https://github.com/passageidentity/passage-flex-rust"
 readme = "README.md"
 license = "MIT"
+include = ["/src", "README.md"]
 
 [dependencies]
 http = "^1.1.0"

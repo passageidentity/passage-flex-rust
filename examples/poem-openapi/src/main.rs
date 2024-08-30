@@ -143,9 +143,9 @@ impl Api {
         // In a real implementation, you'd query your database here
         // For simplicity, we'll just search the in-memory list
         let user_id = {
-            let mut users = self.state.users.lock().await;
+            let users = self.state.users.lock().await;
             users
-                .iter_mut()
+                .iter()
                 .find(|user| user.email == user_email)
                 .map(|user| user.id.clone())
         };
@@ -215,8 +215,8 @@ impl Api {
         query: poem::web::Query<AuthenticatedRequest>,
     ) -> poem::Result<Json<TransactionResponse>> {
         // Verify user identity by finding the user based on auth_token
-        let mut users = self.state.users.lock().await;
-        if let Some(user) = users.iter_mut().find(|user| {
+        let users = self.state.users.lock().await;
+        if let Some(user) = users.iter().find(|user| {
             user.auth_token
                 .as_ref()
                 .is_some_and(|t| *t == query.auth_token)

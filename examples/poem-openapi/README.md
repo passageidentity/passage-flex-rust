@@ -1,6 +1,6 @@
 # poem-openapi with passage_flex
 
-This is an example of how to use the `passage_flex` crate with an HTTP server implemented with [poem-openapi](https://crates.io/crates/poem-openapi) in Rust.
+This is an example of how to use the `passage_flex` crate with an HTTP server implemented with [poem-openapi](https://crates.io/crates/poem-openapi).
 
 
 ## How to run

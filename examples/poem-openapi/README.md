@@ -5,15 +5,12 @@ This is an example of how to use the `passage_flex` crate with an HTTP server im
 
 ## How to run
 
-Set `PASSAGE_APP_ID` and `PASSAGE_API_KEY` environment variables with valid values:
 ```bash
-export PASSAGE_APP_ID=your-app-id
-export PASSAGE_API_KEY=your-api-key
 ```
 
-Start the server:
+Start the server, setting `PASSAGE_APP_ID` and `PASSAGE_API_KEY` environment variables with valid values:
 ```bash
-cargo run
+PASSAGE_APP_ID=your-app-id PASSAGE_API_KEY=your-api-key cargo run
 ```
 
 Test the server operations:

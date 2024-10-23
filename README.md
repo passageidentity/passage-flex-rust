@@ -1,37 +1,65 @@
-# passage_flex
+![passage-flex-rust](https://storage.googleapis.com/passage-docs/github-md-assets/passage-flex-rust.png)
 
-<img src="https://storage.googleapis.com/passage-docs/passage-logo-gradient.svg" alt="Passage logo" style="width:250px;"/>
+![crates.io](https://img.shields.io/crates/v/passage_flex.svg) [![Rust](https://img.shields.io/badge/Rust-%23000000.svg?e&logo=rust&logoColor=white)](#) ![GitHub License](https://img.shields.io/github/license/passageidentity/passage-flex-rust)
+![Static Badge](https://img.shields.io/badge/Built_by_1Password-grey?logo=1password)
 
-![crates.io](https://img.shields.io/crates/v/passage_flex.svg)
+## About
 
-Passkey Flex provides passkey support for existing authentication systems. It abstracts the complexities of native passkey APIs and provides a simple, clean solution to take your authentication to the next level.
+[Passage by 1Password](https://1password.com/product/passage) unlocks the passwordless future with a simpler, more secure passkey authentication experience. Passage handles the complexities of the [WebAuthn API](https://blog.1password.com/what-is-webauthn/), and allows you to implement passkeys with ease.
 
-The `passage_flex` Rust crate allows for verification of server-side authentication for applications using [Passage Passkey Flex](https://passage.id).
+Use [Passkey Flex](https://docs.passage.id/flex) to add passkeys to an existing authentication experience.
 
-For full documentation, visit the [Passkey Flex Docs](https://docs-v2.passage.id/flex) and [Docs.rs](https://docs.rs/passage_flex/latest/passage_flex/) pages.
+Use [Passkey Complete](https://docs.passage.id/complete) as a standalone passwordless auth solution.
 
-## Installation
+Use [Passkey Ready](https://docs.passage.id/passkey-ready) to determine if your users are ready for passkeys.
 
-Install this crate using cargo:
+### In passage-flex-rust
+
+Use passage-flex-rust to implement Passkey Flex into your Rust backend to authenticate requests and manage users.
+
+| Product                                                                                                                                  | Compatible                                                                                                    |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| ![Passkey Flex](https://storage.googleapis.com/passage-docs/github-md-assets/passage-passkey-flex-icon.png) Passkey **Flex**             | ✅                                                                                                            |
+| ![Passkey Complete](https://storage.googleapis.com/passage-docs/github-md-assets/passage-passkey-complete-icon.png) Passkey **Complete** | ✖️ For Passkey Complete, check out the [Passkey Complete APIs](https://docs.passage.id/complete/backend-sdks) |
+| ![Passkey Ready](https://storage.googleapis.com/passage-docs/github-md-assets/passage-passkey-ready-icon.png) Passkey **Ready**          | ✖️ For Passkey Ready, check out [Authentikit](https://www.npmjs.com/package/@passageidentity/authentikit)     |
+
+## Getting Started
+
+### Check Prerequisites
+
+<p>
+ You'll need a free Passage account and a Passkey Flex app set up in <a href="https://console.passage.id/">Passage Console</a> to get started. <br />
+ <sub><a href="https://docs.passage.id/home#passage-console">Learn more about Passage Console →</a></sub>
+</p>
+
+### Install
 
 ```shell
 cargo add passage_flex
 ```
 
-## Create a PassageFlex instance
-
-A Passage AppID and API key are required. An App and AppID can be created in the Passage Console, and an API key can be created under your Application Settings. This API key grants access to the Passage management APIs to get and update information about users. This API key must be protected and stored in an appropriate secure storage location. It should never be hard-coded in the repository.
+### Import
 
 ```rust
 use passage_flex::PassageFlex;
+```
 
+### Initialize
+
+```rust
 let passage_flex = PassageFlex::new(
-    std::env::var("PASSAGE_APP_ID").unwrap(),
-    std::env::var("PASSAGE_API_KEY").unwrap(),
+    std::env::var("YOUR_PASSAGE_APP_ID").unwrap(),
+    std::env::var("YOUR_PASSAGE_API_KEY").unwrap(),
 );
 ```
 
-## Retrieve app info
+### Go Passwordless
+
+Find more details about Passkey Flex on our [Passkey Flex Documentation](https://docs.passage.id/flex) and [Docs.rs](https://docs.rs/passage_flex/latest/passage_flex/) pages.
+
+## API Reference
+
+### Retrieve App Info
 
 To retrieve information about the app, use the `get_app` method.
 
@@ -47,7 +75,7 @@ let app_info = passage_flex.get_app().await.unwrap();
 println!("{}", app_info.auth_origin);
 ```
 
-## Create a registration transaction
+### Create a Registration Transaction
 
 To create a transaction to start a user passkey registration, use the `create_register_transaction` method.
 
@@ -69,7 +97,7 @@ let transaction = passage_flex
     .unwrap();
 ```
 
-## Create an authentication transaction
+### Create an Authentication Transaction
 
 To create a transaction to start a user passkey authentication, use the `create_authenticate_transaction` method.
 
@@ -89,7 +117,7 @@ let transaction = passage_flex
     .unwrap();
 ```
 
-## Verify a nonce
+## Verify a Nonce
 
 To verify a nonce that you received from the end of of passkey registration or authentication ceremony, use the `verify_nonce` method.
 
@@ -114,7 +142,7 @@ match passage_flex.verify_nonce(nonce).await {
 }
 ```
 
-## Retrieve user info
+## Retrieve User Info
 
 To retrieve information about a user by their external ID -- which is the unique, immutable ID you supply to associate the Passage user with your user -- use the `get_user` method.
 
@@ -156,7 +184,7 @@ for device in passkey_devices {
 }
 ```
 
-## Revoke a user's passkey device
+## Revoke a User's Passkey Device
 
 To revoke a user's passkey device, use the `revoke_device` method.
 
@@ -191,3 +219,24 @@ for device in passkey_devices {
     }
 }
 ```
+
+## Support & Feedback
+
+We are here to help! Find additional docs, the best ways to get in touch with our team, and more within our [support resources](https://github.com/passageidentity/.github/blob/main/SUPPORT.md).
+
+<br />
+
+---
+
+<p align="center">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://storage.googleapis.com/passage-docs/github-md-assets/passage-by-1password-dark.png">
+      <source media="(prefers-color-scheme: light)" srcset="https://storage.googleapis.com/passage-docs/github-md-assets/passage-by-1password-light.png">
+      <img alt="Passage by 1Password Logo" src="https://storage.googleapis.com/passage-docs/github-md-assets/passage-by-1password-light.png">
+    </picture>
+</p>
+
+<p align="center">
+    <sub>Passage is a product by <a href="https://1password.com/product/passage">1Password</a>, the global leader in access management solutions with nearly 150k business customers.</sub><br />
+    <sub>This project is licensed under the MIT license. See the <a href="LICENSE">LICENSE</a> file for more info.</sub>
+</p>

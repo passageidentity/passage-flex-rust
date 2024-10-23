@@ -47,8 +47,6 @@ use passage_flex::PassageFlex;
 ### Initialize
 
 ```rust
-use passage_flex::PassageFlex;
-
 let passage_flex = PassageFlex::new(
     std::env::var("YOUR_PASSAGE_APP_ID").unwrap(),
     std::env::var("YOUR_PASSAGE_API_KEY").unwrap(),

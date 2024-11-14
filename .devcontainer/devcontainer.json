@@ -1,0 +1,16 @@
+{
+	"name": "Rust",
+	"image": "mcr.microsoft.com/devcontainers/rust:1-1-bullseye",
+	"features": {
+		"ghcr.io/itsmechlark/features/act:1": {},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"arahata.linter-actionlint"
+			]
+		}
+	},
+	"postCreateCommand": "rustup component add clippy rustfmt && cargo build"
+}

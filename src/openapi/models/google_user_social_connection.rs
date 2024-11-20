@@ -24,3 +24,5 @@ pub struct GoogleUserSocialConnection {
     #[serde(rename = "provider_identifier")]
     pub provider_identifier: String,
 }
+
+

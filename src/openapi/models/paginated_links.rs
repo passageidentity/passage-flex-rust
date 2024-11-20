@@ -24,3 +24,5 @@ pub struct PaginatedLinks {
     #[serde(rename = "self")]
     pub param_self: Box<models::Link>,
 }
+
+

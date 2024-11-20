@@ -13,22 +13,22 @@ use serde::{Deserialize, Serialize};
 
 /// 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum UserStatus {
-    #[serde(rename = "active")]
-    Active,
-    #[serde(rename = "inactive")]
-    Inactive,
-    #[serde(rename = "pending")]
-    Pending,
+pub enum ThemeType {
+    #[serde(rename = "auto")]
+    Auto,
+    #[serde(rename = "light")]
+    Light,
+    #[serde(rename = "dark")]
+    Dark,
 
 }
 
-impl std::fmt::Display for UserStatus {
+impl std::fmt::Display for ThemeType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Self::Active => write!(f, "active"),
-            Self::Inactive => write!(f, "inactive"),
-            Self::Pending => write!(f, "pending"),
+            Self::Auto => write!(f, "auto"),
+            Self::Light => write!(f, "light"),
+            Self::Dark => write!(f, "dark"),
         }
     }
 }

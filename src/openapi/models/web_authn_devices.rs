@@ -39,3 +39,5 @@ pub struct WebAuthnDevices {
     #[serde(rename = "icons")]
     pub icons: Box<models::WebAuthnIcons>,
 }
+
+

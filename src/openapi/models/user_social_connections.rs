@@ -20,3 +20,5 @@ pub struct UserSocialConnections {
     #[serde(rename = "google", skip_serializing_if = "Option::is_none")]
     pub google: Option<Box<models::GoogleUserSocialConnection>>,
 }
+
+

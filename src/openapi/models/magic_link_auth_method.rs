@@ -21,3 +21,5 @@ pub struct MagicLinkAuthMethod {
     #[serde(rename = "ttl_display_unit")]
     pub ttl_display_unit: models::TtlDisplayUnit,
 }
+
+

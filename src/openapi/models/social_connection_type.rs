@@ -13,22 +13,22 @@ use serde::{Deserialize, Serialize};
 
 /// 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum UserStatus {
-    #[serde(rename = "active")]
-    Active,
-    #[serde(rename = "inactive")]
-    Inactive,
-    #[serde(rename = "pending")]
-    Pending,
+pub enum SocialConnectionType {
+    #[serde(rename = "apple")]
+    Apple,
+    #[serde(rename = "github")]
+    Github,
+    #[serde(rename = "google")]
+    Google,
 
 }
 
-impl std::fmt::Display for UserStatus {
+impl std::fmt::Display for SocialConnectionType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Self::Active => write!(f, "active"),
-            Self::Inactive => write!(f, "inactive"),
-            Self::Pending => write!(f, "pending"),
+            Self::Apple => write!(f, "apple"),
+            Self::Github => write!(f, "github"),
+            Self::Google => write!(f, "google"),
         }
     }
 }

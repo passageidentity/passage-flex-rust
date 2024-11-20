@@ -16,3 +16,5 @@ pub struct ListDevicesResponse {
     #[serde(rename = "devices")]
     pub devices: Vec<models::WebAuthnDevices>,
 }
+
+

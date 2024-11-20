@@ -21,6 +21,7 @@ pub enum WebAuthnType {
     SecurityKey,
     #[serde(rename = "platform")]
     Platform,
+
 }
 
 impl std::fmt::Display for WebAuthnType {
@@ -32,3 +33,5 @@ impl std::fmt::Display for WebAuthnType {
         }
     }
 }
+
+

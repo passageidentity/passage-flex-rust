@@ -378,53 +378,56 @@ async fn test_get_app() {
             "allowed_logout_urls": [],
             "application_login_uri": "",
             "auth_fallback_method": "none",
-            "auth_fallback_method_ttl": 0,
+            "auth_fallback_method_ttl": 300,
             "auth_methods": {
-                "passkeys": { "enabled": false },
-                "otp": {
-                    "enabled": false,
-                    "ttl": 0,
-                    "ttl_display_unit": "s"
-                },
                 "magic_link": {
                     "enabled": false,
-                    "ttl": 0,
+                    "ttl": 300,
                     "ttl_display_unit": "s"
+                },
+                "otp": {
+                    "enabled": false,
+                    "ttl": 300,
+                    "ttl_display_unit": "s"
+                },
+                "passkeys": {
+                    "enabled": true
                 }
             },
             "auth_origin": "https://auth.test.com",
-            "auto_theme_enabled": false,
+            "auto_theme_enabled": true,
             "created_at": "2021-01-01T00:00:00Z",
             "default_language": "en",
+            "element_customization": {},
+            "element_customization_dark": {},
+            "hosted": false,
+            "hosted_subdomain": "test",
+            "hosted_theme": "auto",
             "id": "test_app_id",
+            "id_token_lifetime": 600,
             "layouts": {
                 "profile": [],
                 "registration": []
             },
-            "login_url": "",
+            "login_url": "/",
             "name": "Test App",
-            "hosted": false,
-            "hosted_subdomain": "",
-            "id_token_lifetime": null,
-            "passage_branding": false,
+            "passage_branding": true,
             "profile_management": false,
             "public_signup": false,
-            "redirect_url": "",
-            "refresh_absolute_lifetime": 0,
+            "redirect_url": "/",
+            "refresh_absolute_lifetime": 2592000,
             "refresh_enabled": false,
-            "refresh_inactivity_lifetime": 0,
+            "refresh_inactivity_lifetime": 432000,
             "require_email_verification": false,
             "require_identifier_verification": false,
-            "required_identifier": "",
+            "required_identifier": "external",
             "role": "",
             "rsa_public_key": "",
             "secret": null,
-            "session_timeout_length": 0,
-            "type": "flex",
-            "user_metadata_schema": [],
+            "session_timeout_length": 5,
             "technologies": [],
-            "element_customization": {},
-            "element_customization_dark": {}
+            "type": "flex",
+            "user_metadata_schema": []
         }
     }"#,
         )

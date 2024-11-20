@@ -58,6 +58,8 @@ impl fmt::Display for Error {
 
 mod error;
 pub mod models;
+
+#[rustfmt::skip]
 pub mod openapi;
 
 pub mod passage_flex;

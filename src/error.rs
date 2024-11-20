@@ -170,7 +170,7 @@ impl From<crate::openapi::models::model_404_error::Model404Error> for Error {
 impl From<crate::openapi::models::model_409_error::Model409Error> for Error {
     fn from(e: crate::openapi::models::model_409_error::Model409Error) -> Self {
         match e.code {
-            crate::openapi::models::model_409_error::Code::HasNoPasskeys => {
+            crate::openapi::models::model_409_error::Code::UserHasNoPasskeys => {
                 Error::UserHasNoPasskeys
             }
             _ => Error::Other(e.error),

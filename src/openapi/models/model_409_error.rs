@@ -19,13 +19,19 @@ pub struct Model409Error {
     pub error: String,
 }
 
-///
+/// 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
     #[serde(rename = "user_already_admin")]
-    AlreadyAdmin,
+    UserAlreadyAdmin,
     #[serde(rename = "user_already_organization_member")]
-    AlreadyOrganizationMember,
+    UserAlreadyOrganizationMember,
     #[serde(rename = "user_has_no_passkeys")]
-    HasNoPasskeys,
+    UserHasNoPasskeys,
+    #[serde(rename = "native_client_already_exists")]
+    NativeClientAlreadyExists,
+    #[serde(rename = "failed_to_sync_email_preferences")]
+    FailedToSyncEmailPreferences,
 }
+
+

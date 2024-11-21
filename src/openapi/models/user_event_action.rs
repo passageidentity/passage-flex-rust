@@ -13,22 +13,22 @@ use serde::{Deserialize, Serialize};
 
 /// 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum UserStatus {
-    #[serde(rename = "active")]
-    Active,
-    #[serde(rename = "inactive")]
-    Inactive,
-    #[serde(rename = "pending")]
-    Pending,
+pub enum UserEventAction {
+    #[serde(rename = "register")]
+    Register,
+    #[serde(rename = "login")]
+    Login,
+    #[serde(rename = "other")]
+    Other,
 
 }
 
-impl std::fmt::Display for UserStatus {
+impl std::fmt::Display for UserEventAction {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Self::Active => write!(f, "active"),
-            Self::Inactive => write!(f, "inactive"),
-            Self::Pending => write!(f, "pending"),
+            Self::Register => write!(f, "register"),
+            Self::Login => write!(f, "login"),
+            Self::Other => write!(f, "other"),
         }
     }
 }

@@ -17,3 +17,5 @@ pub struct CreateTransactionAuthenticateRequest {
     #[serde(rename = "external_id")]
     pub external_id: String,
 }
+
+

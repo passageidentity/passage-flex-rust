@@ -17,3 +17,5 @@ pub struct AuthenticateVerifyNonceResponse {
     #[serde(rename = "external_id")]
     pub external_id: String,
 }
+
+

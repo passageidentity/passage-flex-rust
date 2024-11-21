@@ -20,3 +20,5 @@ pub struct CreateTransactionRegisterRequest {
     #[serde(rename = "passkey_display_name")]
     pub passkey_display_name: String,
 }
+
+

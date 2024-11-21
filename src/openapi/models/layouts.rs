@@ -18,3 +18,5 @@ pub struct Layouts {
     #[serde(rename = "registration")]
     pub registration: Vec<models::LayoutConfig>,
 }
+
+

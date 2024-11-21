@@ -11,7 +11,7 @@
 use crate::openapi::models;
 use serde::{Deserialize, Serialize};
 
-///
+/// 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum UserMetadataFieldType {
     #[serde(rename = "string")]
@@ -26,6 +26,7 @@ pub enum UserMetadataFieldType {
     Phone,
     #[serde(rename = "email")]
     Email,
+
 }
 
 impl std::fmt::Display for UserMetadataFieldType {
@@ -40,3 +41,5 @@ impl std::fmt::Display for UserMetadataFieldType {
         }
     }
 }
+
+

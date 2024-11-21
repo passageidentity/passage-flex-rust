@@ -19,3 +19,5 @@ pub struct WebAuthnIcons {
     #[serde(rename = "dark", deserialize_with = "Option::deserialize")]
     pub dark: Option<String>,
 }
+
+

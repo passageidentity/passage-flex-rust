@@ -21,3 +21,5 @@ pub struct AuthMethods {
     #[serde(rename = "magic_link")]
     pub magic_link: Box<models::MagicLinkAuthMethod>,
 }
+
+

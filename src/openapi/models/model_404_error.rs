@@ -19,7 +19,7 @@ pub struct Model404Error {
     pub error: String,
 }
 
-///
+/// 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
     #[serde(rename = "admin_not_found")]
@@ -58,4 +58,8 @@ pub enum Code {
     SocialConnectionNotFound,
     #[serde(rename = "user_not_found")]
     UserNotFound,
+    #[serde(rename = "native_client_not_found")]
+    NativeClientNotFound,
 }
+
+

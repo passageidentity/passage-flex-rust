@@ -16,3 +16,5 @@ pub struct PasskeysAuthMethod {
     #[serde(rename = "enabled")]
     pub enabled: bool,
 }
+
+

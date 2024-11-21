@@ -50,3 +50,5 @@ pub struct UserInfo {
     #[serde(rename = "webauthn_types")]
     pub webauthn_types: Vec<models::WebAuthnType>,
 }
+
+

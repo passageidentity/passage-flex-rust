@@ -24,3 +24,5 @@ pub struct GithubUserSocialConnection {
     #[serde(rename = "provider_identifier")]
     pub provider_identifier: String,
 }
+
+

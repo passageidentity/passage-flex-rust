@@ -36,6 +36,7 @@ pub struct AppInfo {
     pub auth_methods: Box<models::AuthMethods>,
     #[serde(rename = "auth_origin")]
     pub auth_origin: String,
+    /// Deprecated Property. Please use `hosted_theme` to set hosted page theming instead.
     #[serde(rename = "auto_theme_enabled")]
     pub auto_theme_enabled: bool,
     #[serde(rename = "created_at")]
@@ -54,12 +55,14 @@ pub struct AppInfo {
     pub dark_logo_url: Option<String>,
     #[serde(rename = "name")]
     pub name: String,
-    /// whether or not the app's login page hosted by passage
+    /// whether or not the app's login page is hosted by Passage
     #[serde(rename = "hosted")]
     pub hosted: bool,
     /// the subdomain of the app's hosted login page
     #[serde(rename = "hosted_subdomain")]
     pub hosted_subdomain: String,
+    #[serde(rename = "hosted_theme")]
+    pub hosted_theme: models::ThemeType,
     #[serde(rename = "id_token_lifetime", skip_serializing_if = "Option::is_none")]
     pub id_token_lifetime: Option<i32>,
     #[serde(rename = "passage_branding")]
@@ -103,7 +106,7 @@ pub struct AppInfo {
     pub element_customization_dark: Box<models::ElementCustomization>,
 }
 
-///
+/// 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Type {
     #[serde(rename = "complete")]
@@ -111,3 +114,5 @@ pub enum Type {
     #[serde(rename = "flex")]
     Flex,
 }
+
+

@@ -11,8 +11,8 @@
 use crate::openapi::models;
 use serde::{Deserialize, Serialize};
 
-/// TtlDisplayUnit : Deprecated Property. The preferred unit for displaying the TTL. This value is for display only. * `s` - seconds * `m` - minutes * `h` - hours * `d` - days
-/// Deprecated Property. The preferred unit for displaying the TTL. This value is for display only. * `s` - seconds * `m` - minutes * `h` - hours * `d` - days
+/// TtlDisplayUnit : Deprecated Property. The preferred unit for displaying the TTL. This value is for display only. * `s` - seconds * `m` - minutes * `h` - hours * `d` - days 
+/// Deprecated Property. The preferred unit for displaying the TTL. This value is for display only. * `s` - seconds * `m` - minutes * `h` - hours * `d` - days 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum TtlDisplayUnit {
     #[serde(rename = "s")]
@@ -23,6 +23,7 @@ pub enum TtlDisplayUnit {
     H,
     #[serde(rename = "d")]
     D,
+
 }
 
 impl std::fmt::Display for TtlDisplayUnit {
@@ -35,3 +36,5 @@ impl std::fmt::Display for TtlDisplayUnit {
         }
     }
 }
+
+

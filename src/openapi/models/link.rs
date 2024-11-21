@@ -16,3 +16,5 @@ pub struct Link {
     #[serde(rename = "href")]
     pub href: String,
 }
+
+

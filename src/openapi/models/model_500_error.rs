@@ -19,9 +19,11 @@ pub struct Model500Error {
     pub error: String,
 }
 
-///
+/// 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
     #[serde(rename = "internal_server_error")]
     InternalServerError,
 }
+
+

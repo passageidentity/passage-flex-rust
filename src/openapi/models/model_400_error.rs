@@ -19,7 +19,7 @@ pub struct Model400Error {
     pub error: String,
 }
 
-///
+/// 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
     #[serde(rename = "invalid_request")]
@@ -27,3 +27,5 @@ pub enum Code {
     #[serde(rename = "custom_provider_required")]
     CustomProviderRequired,
 }
+
+

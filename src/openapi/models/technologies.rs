@@ -11,7 +11,7 @@
 use crate::openapi::models;
 use serde::{Deserialize, Serialize};
 
-///
+/// 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Technologies {
     #[serde(rename = "react")]
@@ -30,6 +30,7 @@ pub enum Technologies {
     Ios,
     #[serde(rename = "android")]
     Android,
+
 }
 
 impl std::fmt::Display for Technologies {
@@ -46,3 +47,5 @@ impl std::fmt::Display for Technologies {
         }
     }
 }
+
+

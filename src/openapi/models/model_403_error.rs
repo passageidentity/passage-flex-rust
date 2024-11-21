@@ -19,7 +19,7 @@ pub struct Model403Error {
     pub error: String,
 }
 
-///
+/// 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
     #[serde(rename = "cannot_create_organization_billing_portal_session")]
@@ -35,3 +35,5 @@ pub enum Code {
     #[serde(rename = "operation_not_allowed")]
     OperationNotAllowed,
 }
+
+

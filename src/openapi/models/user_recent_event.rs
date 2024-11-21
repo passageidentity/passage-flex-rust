@@ -25,6 +25,16 @@ pub struct UserRecentEvent {
     pub status: models::UserEventStatus,
     #[serde(rename = "type")]
     pub r#type: String,
+    /// The raw user agent value from the originating device
     #[serde(rename = "user_agent")]
     pub user_agent: String,
+    /// A display-friendly version of the user agent
+    #[serde(rename = "user_agent_display")]
+    pub user_agent_display: String,
+    #[serde(rename = "action")]
+    pub action: models::UserEventAction,
+    #[serde(rename = "social_login_type", deserialize_with = "Option::deserialize")]
+    pub social_login_type: Option<models::SocialConnectionType>,
 }
+
+

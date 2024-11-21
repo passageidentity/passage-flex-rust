@@ -19,7 +19,7 @@ pub struct Model401Error {
     pub error: String,
 }
 
-///
+/// 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum Code {
     #[serde(rename = "invalid_access_token")]
@@ -27,3 +27,5 @@ pub enum Code {
     #[serde(rename = "invalid_nonce")]
     Nonce,
 }
+
+

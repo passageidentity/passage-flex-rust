@@ -16,3 +16,5 @@ pub struct UserResponse {
     #[serde(rename = "user")]
     pub user: Box<models::UserInfo>,
 }
+
+

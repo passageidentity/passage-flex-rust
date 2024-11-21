@@ -16,3 +16,5 @@ pub struct AppResponse {
     #[serde(rename = "app")]
     pub app: Box<models::AppInfo>,
 }
+
+

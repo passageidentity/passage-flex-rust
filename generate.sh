@@ -14,7 +14,7 @@ remove_lines_between_markers() {
     local end_marker=$3
 
     # Use sed to remove lines between start and end markers, inclusive
-    sed -i '' -e "/$start_marker/,/$end_marker/d" "$file"
+    sed -i.bak "/$start_marker/,/$end_marker/d" "$file" && rm -f "$file.bak"
 }
 
 # Function to process a single Rust file
@@ -49,7 +49,7 @@ process_rust_file() {
     rm "$tmp_file"
 
     # Remove 'Default' from #[derive(...)] lines
-    sed -i '' -E 's/(\#\[derive\([^\)]*)Default,?\s*/\1/' "$file"
+    sed -i.bak -E 's/(\#\[derive\([^\)]*)Default,?\s*/\1/; s/,  */, /g' "$file" && rm -f "$file.bak"
 }
 
 # Function to recursively process all Rust files in a directory
@@ -90,4 +90,4 @@ echo -e "#![allow(clippy::all)]\n#![allow(dead_code)]" > "$tmpfile"
 cat ./src/openapi/mod.rs >> "$tmpfile"
 mv "$tmpfile" ./src/openapi/mod.rs
 
-sed -i '' -E 's/crate::/crate::openapi::/g' ./src/openapi/**/*.rs
+sed -i.bak -E 's/crate::/crate::openapi::/g' ./src/openapi/**/*.rs && rm -f ./src/openapi/**/*.rs.bak

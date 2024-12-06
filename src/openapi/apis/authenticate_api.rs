@@ -49,11 +49,12 @@ pub async fn authenticate_verify_nonce(configuration: &configuration::Configurat
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        let local_var_content = local_var_resp.text().await?;
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
+        let local_var_content = local_var_resp.text().await?;
         let local_var_entity: Option<AuthenticateVerifyNonceError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))

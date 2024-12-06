@@ -61,11 +61,12 @@ pub async fn create_authenticate_transaction(configuration: &configuration::Conf
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        let local_var_content = local_var_resp.text().await?;
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
+        let local_var_content = local_var_resp.text().await?;
         let local_var_entity: Option<CreateAuthenticateTransactionError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
@@ -92,11 +93,12 @@ pub async fn create_register_transaction(configuration: &configuration::Configur
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        let local_var_content = local_var_resp.text().await?;
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
+        let local_var_content = local_var_resp.text().await?;
         let local_var_entity: Option<CreateRegisterTransactionError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))

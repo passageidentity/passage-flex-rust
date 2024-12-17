@@ -289,7 +289,7 @@ async fn test_get_user() {
     let (app_id, passage_flex, mut server) = setup_passage_flex().await;
 
     let m1 = setup_empty_list_paginated_users_mock(&app_id, &mut server).await;
-    let invalid_result = passage_flex.get_user("invalid".to_string()).await;
+    let invalid_result = passage_flex.user.get("invalid".to_string()).await;
     m1.assert_async().await;
     assert!(invalid_result.is_err());
     assert!(matches!(invalid_result, Err(Error::UserNotFound)));
@@ -297,7 +297,7 @@ async fn test_get_user() {
     let m2 = setup_valid_list_paginated_users_mock(&app_id, &mut server).await;
     let m3 = setup_valid_get_user_mock(&app_id, &mut server).await;
 
-    let user_info = passage_flex.get_user("valid".to_string()).await.unwrap();
+    let user_info = passage_flex.user.get("valid".to_string()).await.unwrap();
     m2.assert_async().await;
     m3.assert_async().await;
     assert_eq!(user_info.external_id, "valid");
@@ -308,14 +308,18 @@ async fn test_get_devices() {
     let (app_id, passage_flex, mut server) = setup_passage_flex().await;
 
     let m1 = setup_empty_list_paginated_users_mock(&app_id, &mut server).await;
-    let invalid_result = passage_flex.get_devices("invalid".to_string()).await;
+    let invalid_result = passage_flex.user.list_devices("invalid".to_string()).await;
     m1.assert_async().await;
     assert!(invalid_result.is_err());
     assert!(matches!(invalid_result, Err(Error::UserNotFound)));
 
     let m2 = setup_valid_list_paginated_users_mock(&app_id, &mut server).await;
     let m3 = setup_valid_get_devices_mock(&app_id, &mut server).await;
-    let devices = passage_flex.get_devices("valid".to_string()).await.unwrap();
+    let devices = passage_flex
+        .user
+        .list_devices("valid".to_string())
+        .await
+        .unwrap();
     m2.assert_async().await;
     m3.assert_async().await;
     assert_eq!(devices.len(), 1);
@@ -328,6 +332,7 @@ async fn test_revoke_device() {
 
     let m1 = setup_empty_list_paginated_users_mock(&app_id, &mut server).await;
     let invalid_result = passage_flex
+        .user
         .revoke_device("invalid".to_string(), "invalid".to_string())
         .await;
     m1.assert_async().await;
@@ -337,6 +342,7 @@ async fn test_revoke_device() {
     let m2 = setup_valid_list_paginated_users_mock(&app_id, &mut server).await;
     let m3 = setup_valid_revoke_device_mock(&app_id, &mut server).await;
     let result = passage_flex
+        .user
         .revoke_device("valid".to_string(), "test_device_id".to_string())
         .await;
     m2.assert_async().await;

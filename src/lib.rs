@@ -62,6 +62,7 @@ pub mod models;
 #[rustfmt::skip]
 pub mod openapi;
 
+pub mod auth;
 pub mod passage_flex;
 pub mod user;
 pub use passage_flex::PassageFlex;

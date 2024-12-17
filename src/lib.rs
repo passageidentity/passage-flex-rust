@@ -63,4 +63,5 @@ pub mod models;
 pub mod openapi;
 
 pub mod passage_flex;
+pub mod user;
 pub use passage_flex::PassageFlex;

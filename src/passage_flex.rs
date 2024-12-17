@@ -1,13 +1,13 @@
-use crate::models::{AppInfo, UserInfo};
+use crate::models::AppInfo;
 use crate::openapi::apis::configuration::Configuration;
-use crate::openapi::apis::{
-    apps_api, authenticate_api, transactions_api, user_devices_api, users_api,
-};
+use crate::openapi::apis::{apps_api, authenticate_api, transactions_api};
+use crate::user::User;
 use crate::Error;
 
 pub struct PassageFlex {
     app_id: String,
     configuration: Configuration,
+    pub user: User,
 }
 
 const SERVER_URL: &str = "https://api.passage.id";
@@ -31,10 +31,6 @@ impl PassageFlex {
     /// );
     /// ```
     pub fn new(app_id: String, api_key: String) -> Self {
-        let mut configuration = Configuration::new();
-        // Use the api_key as the bearer access token
-        configuration.bearer_access_token = Some(api_key);
-        // Set the Passage-Version header to the version of the crate
         let mut headers = reqwest::header::HeaderMap::with_capacity(1);
         headers.insert(
             "Passage-Version",
@@ -43,14 +39,20 @@ impl PassageFlex {
                 env!("CARGO_PKG_VERSION")
             )),
         );
+
+        let mut configuration = Configuration::new();
+        configuration.bearer_access_token = Some(api_key);
         configuration.client = reqwest::Client::builder()
             .default_headers(headers)
             .build()
             .expect("Failed to create reqwest client for Passage");
 
+        let user = User::new(configuration.clone());
+
         let mut client = Self {
             app_id,
             configuration,
+            user,
         };
         // Set the default server URL
         client.set_server_url(SERVER_URL.to_string());
@@ -59,7 +61,7 @@ impl PassageFlex {
     }
 
     fn set_server_url(&mut self, server_url: String) {
-        // Use the app_id and server_url to set the base_path
+        self.user.configuration.base_path = format!("{}/v1/apps/{}", server_url, self.app_id);
         self.configuration.base_path = format!("{}/v1/apps/{}", server_url, self.app_id);
     }
 
@@ -218,198 +220,6 @@ impl PassageFlex {
         .await
         .map(|response| response.external_id)
         .map_err(Into::into)
-    }
-
-    /// Get a user's ID in Passage by their external ID
-    async fn get_id(&self, external_id: String) -> Result<String, Error> {
-        let users = users_api::list_paginated_users(
-            &self.configuration,
-            Some(1),
-            Some(1),
-            None,
-            None,
-            Some(&external_id),
-            None,
-            None,
-            None,
-            None,
-            None,
-            None,
-        )
-        .await
-        .map(|response| response.users)
-        .map_err(Into::into);
-
-        match users {
-            Ok(mut users) => match users.len() {
-                0 => Err(Error::UserNotFound),
-                1 => {
-                    let user = users.remove(0);
-                    Ok(user.id)
-                }
-                _ => Err(Error::Other("Multiple users found".to_string())),
-            },
-            Err(e) => Err(e),
-        }
-    }
-
-    /// Retrieves information about a user by their external ID.
-    ///
-    /// # Arguments
-    ///
-    /// * `external_id` - The unique, immutable ID that represents the user.
-    ///
-    /// # Returns
-    ///
-    /// A `Result` containing the `UserInfo` struct or an `Error`.
-    ///
-    /// # Examples
-    ///
-    /// ```ignore
-    /// use passage_flex::PassageFlex;
-    ///
-    /// let passage_flex = PassageFlex::new(
-    ///     std::env::var("PASSAGE_APP_ID").unwrap(),
-    ///     std::env::var("PASSAGE_API_KEY").unwrap(),
-    /// );
-    ///
-    /// let external_id = "00000000-0000-0000-0000-000000000001";
-    /// let user_info = passage_flex.get_user(external_id.to_string()).await.unwrap();
-    /// println!("{:?}", user_info.id);
-    /// ```
-    pub async fn get_user(&self, external_id: String) -> Result<Box<UserInfo>, Error> {
-        let user_id = self.get_id(external_id).await?;
-        self.get_user_by_id(user_id).await
-    }
-
-    /// Retrieves information about a user's passkey devices.
-    ///
-    /// # Arguments
-    ///
-    /// * `external_id` - The unique, immutable ID that represents the user.
-    ///
-    /// # Returns
-    ///
-    /// A `Result` containing a vector of `WebAuthnDevices` or an `Error`.
-    ///
-    /// # Examples
-    ///
-    /// ```ignore
-    /// use passage_flex::PassageFlex;
-    ///
-    /// let passage_flex = PassageFlex::new(
-    ///     std::env::var("PASSAGE_APP_ID").unwrap(),
-    ///     std::env::var("PASSAGE_API_KEY").unwrap(),
-    /// );
-    ///
-    /// let external_id = "00000000-0000-0000-0000-000000000001";
-    /// let passkey_devices = passage_flex.get_devices(external_id.to_string()).await.unwrap();
-    /// for device in passkey_devices {
-    ///     println!("{}", device.usage_count);
-    /// }
-    /// ```
-    pub async fn get_devices(
-        &self,
-        external_id: String,
-    ) -> Result<Vec<crate::openapi::models::WebAuthnDevices>, Error> {
-        let user_id = self.get_id(external_id).await?;
-        user_devices_api::list_user_devices(&self.configuration, &user_id)
-            .await
-            .map(|response| response.devices)
-            .map_err(Into::into)
-    }
-
-    /// Revokes a user's passkey device.
-    ///
-    /// # Arguments
-    ///
-    /// * `external_id` - The unique, immutable ID that represents the user.
-    /// * `device_id` - The ID of the device to be revoked.
-    ///
-    /// # Returns
-    ///
-    /// A `Result` containing `()` or an `Error`.
-    ///
-    /// # Examples
-    ///
-    /// ```ignore
-    /// use passage_flex::PassageFlex;
-    /// use chrono::{Duration, NaiveDate, Utc};
-    ///
-    /// let passage_flex = PassageFlex::new(
-    ///     std::env::var("PASSAGE_APP_ID").unwrap(),
-    ///     std::env::var("PASSAGE_API_KEY").unwrap(),
-    /// );
-    ///
-    /// let external_id = "00000000-0000-0000-0000-000000000001";
-    /// let last_year = Utc::now().naive_utc().date() - Duration::days(365);
-    ///
-    /// let passkey_devices = passage_flex.get_devices(external_id.to_string()).await.unwrap();
-    ///
-    /// for device in passkey_devices {
-    ///     let last_login_at_parsed =
-    ///         NaiveDate::parse_from_str(&device.last_login_at, "%Y-%m-%dT%H:%M:%S%z").unwrap();
-    ///
-    ///     if last_login_at_parsed < last_year {
-    ///         if let Err(err) = passage_flex
-    ///             .revoke_device(external_id.clone(), device.id)
-    ///             .await
-    ///         {
-    ///             // device couldn't be revoked
-    ///         }
-    ///     }
-    /// }
-    /// ```
-    pub async fn revoke_device(&self, external_id: String, device_id: String) -> Result<(), Error> {
-        let user_id = self.get_id(external_id).await?;
-        user_devices_api::delete_user_devices(&self.configuration, &user_id, &device_id)
-            .await
-            .map_err(Into::into)
-    }
-
-    /// Retrieves information about a user by their user ID in Passage.
-    ///
-    /// # Arguments
-    ///
-    /// * `user_id` - The ID of the user in Passage.
-    ///
-    /// # Returns
-    ///
-    /// A `Result` containing the `UserInfo` struct or an `Error`.
-    ///
-    /// # Examples
-    ///
-    /// ```ignore
-    /// use passage_flex::PassageFlex;
-    ///
-    /// let passage_flex = PassageFlex::new(
-    ///     std::env::var("PASSAGE_APP_ID").unwrap(),
-    ///     std::env::var("PASSAGE_API_KEY").unwrap(),
-    /// );
-    ///
-    /// let user_id = "user_id_string";
-    /// let user_info = passage_flex.get_user_by_id(user_id.to_string()).await.unwrap();
-    /// println!("{:?}", user_info.external_id);
-    /// ```
-    pub async fn get_user_by_id(&self, user_id: String) -> Result<Box<UserInfo>, Error> {
-        users_api::get_user(&self.configuration, &user_id)
-            .await
-            .map(|response| {
-                Box::new(UserInfo {
-                    created_at: response.user.created_at,
-                    external_id: response.user.external_id,
-                    id: response.user.id,
-                    last_login_at: response.user.last_login_at,
-                    login_count: response.user.login_count,
-                    status: response.user.status,
-                    updated_at: response.user.updated_at,
-                    user_metadata: response.user.user_metadata,
-                    webauthn: response.user.webauthn,
-                    webauthn_devices: response.user.webauthn_devices,
-                    webauthn_types: response.user.webauthn_types,
-                })
-            })
-            .map_err(Into::into)
     }
 }
 

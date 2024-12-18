@@ -1,6 +1,4 @@
-use crate::openapi::apis::{
-    apps_api, authenticate_api, transactions_api, user_devices_api, users_api,
-};
+use crate::openapi::apis::{authenticate_api, transactions_api, user_devices_api, users_api};
 use crate::Error;
 
 // This function converts an openapi error into a crate error

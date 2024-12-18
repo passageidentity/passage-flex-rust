@@ -144,7 +144,7 @@ let passage_flex = PassageFlex::new(
 let external_id = your_user.id;
 
 // get user info
-let user_info = passage_flex.user.get_user(external_id).await.unwrap();
+let user_info = passage_flex.user.get(external_id).await.unwrap();
 println!("{:?}", user_info.webauthn_devices);
 ```
 

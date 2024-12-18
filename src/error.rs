@@ -1,6 +1,4 @@
-use crate::openapi::apis::{
-    apps_api, authenticate_api, transactions_api, user_devices_api, users_api,
-};
+use crate::openapi::apis::{authenticate_api, transactions_api, user_devices_api, users_api};
 use crate::Error;
 
 // This function converts an openapi error into a crate error
@@ -13,17 +11,6 @@ fn convert_error<Src>(error: crate::openapi::apis::Error<Src>, map_fn: fn(Src) -
             Some(entity) => map_fn(entity),
             None => Error::Other(response.content),
         },
-    }
-}
-
-impl From<crate::openapi::apis::Error<apps_api::GetAppError>> for Error {
-    fn from(e: crate::openapi::apis::Error<apps_api::GetAppError>) -> Self {
-        convert_error(e, |e| match e {
-            apps_api::GetAppError::Status401(model) => model.into(),
-            apps_api::GetAppError::Status404(model) => model.into(),
-            apps_api::GetAppError::Status500(model) => model.into(),
-            apps_api::GetAppError::UnknownValue(v) => Error::Other(v.to_string()),
-        })
     }
 }
 

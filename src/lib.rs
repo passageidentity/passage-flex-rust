@@ -11,8 +11,8 @@
 //!     std::env::var("PASSAGE_API_KEY").unwrap(),
 //! );
 //!
-//! let app_info = passage_flex.get_app().await.unwrap();
-//! println!("{}", app_info.auth_origin);
+//! let passage_user = passage_flex.user.get(external_id).await.unwrap();
+//! println!("{:?}", passage_user.webauthn_devices);
 //! ```
 
 use std::fmt;
@@ -62,5 +62,7 @@ pub mod models;
 #[rustfmt::skip]
 pub mod openapi;
 
+pub mod auth;
 pub mod passage_flex;
+pub mod user;
 pub use passage_flex::PassageFlex;

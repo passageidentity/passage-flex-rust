@@ -16,17 +16,6 @@ fn convert_error<Src>(error: crate::openapi::apis::Error<Src>, map_fn: fn(Src) -
     }
 }
 
-impl From<crate::openapi::apis::Error<apps_api::GetAppError>> for Error {
-    fn from(e: crate::openapi::apis::Error<apps_api::GetAppError>) -> Self {
-        convert_error(e, |e| match e {
-            apps_api::GetAppError::Status401(model) => model.into(),
-            apps_api::GetAppError::Status404(model) => model.into(),
-            apps_api::GetAppError::Status500(model) => model.into(),
-            apps_api::GetAppError::UnknownValue(v) => Error::Other(v.to_string()),
-        })
-    }
-}
-
 impl From<crate::openapi::apis::Error<transactions_api::CreateRegisterTransactionError>> for Error {
     fn from(
         e: crate::openapi::apis::Error<transactions_api::CreateRegisterTransactionError>,

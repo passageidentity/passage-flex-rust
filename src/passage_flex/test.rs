@@ -302,10 +302,10 @@ async fn test_get_user() {
     let m2 = setup_valid_list_paginated_users_mock(&app_id, &mut server).await;
     let m3 = setup_valid_get_user_mock(&app_id, &mut server).await;
 
-    let user_info = passage_flex.user.get("valid".to_string()).await.unwrap();
+    let passage_user = passage_flex.user.get("valid".to_string()).await.unwrap();
     m2.assert_async().await;
     m3.assert_async().await;
-    assert_eq!(user_info.external_id, "valid");
+    assert_eq!(passage_user.external_id, "valid");
 }
 
 #[tokio::test]

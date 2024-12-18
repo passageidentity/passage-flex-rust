@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct UserInfo {
+pub struct PassageUser {
     #[serde(rename = "created_at")]
     pub created_at: String,
     /// The external ID of the user. Only set if the user was created in a Flex app.

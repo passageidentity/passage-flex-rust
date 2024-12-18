@@ -1,4 +1,4 @@
-use crate::models::UserInfo;
+use crate::models::PassageUser;
 use crate::openapi::apis::configuration::Configuration;
 use crate::openapi::apis::{user_devices_api, users_api};
 use crate::Error;
@@ -67,15 +67,15 @@ impl User {
     /// );
     ///
     /// let external_id = "00000000-0000-0000-0000-000000000001";
-    /// let user_info = passage_flex.user.get(external_id.to_string()).await.unwrap();
-    /// println!("{:?}", user_info.id);
+    /// let passage_user = passage_flex.user.get(external_id.to_string()).await.unwrap();
+    /// println!("{:?}", passage_user.id);
     /// ```
-    pub async fn get(&self, external_id: String) -> Result<Box<UserInfo>, Error> {
+    pub async fn get(&self, external_id: String) -> Result<Box<PassageUser>, Error> {
         let user_id = self.get_id(external_id).await?;
         users_api::get_user(&self.configuration, &user_id)
             .await
             .map(|response| {
-                Box::new(UserInfo {
+                Box::new(PassageUser {
                     created_at: response.user.created_at,
                     external_id: response.user.external_id,
                     id: response.user.id,

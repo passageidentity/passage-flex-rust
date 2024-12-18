@@ -11,8 +11,8 @@
 //!     std::env::var("PASSAGE_API_KEY").unwrap(),
 //! );
 //!
-//! let user_info = passage_flex.user.get(external_id).await.unwrap();
-//! println!("{:?}", user_info.webauthn_devices);
+//! let passage_user = passage_flex.user.get(external_id).await.unwrap();
+//! println!("{:?}", passage_user.webauthn_devices);
 //! ```
 
 use std::fmt;

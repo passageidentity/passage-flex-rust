@@ -144,8 +144,8 @@ let passage_flex = PassageFlex::new(
 let external_id = your_user.id;
 
 // get user info
-let user_info = passage_flex.user.get(external_id).await.unwrap();
-println!("{:?}", user_info.webauthn_devices);
+let passage_user = passage_flex.user.get(external_id).await.unwrap();
+println!("{:?}", passage_user.webauthn_devices);
 ```
 
 ## Retrieve a user's passkey devices

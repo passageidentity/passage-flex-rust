@@ -34,6 +34,7 @@ impl Auth {
     /// );
     ///
     /// let transaction = passage_flex
+    ///     .auth
     ///     .create_register_transaction(
     ///         "00000000-0000-0000-0000-000000000001".to_string(),
     ///         "user@example.com".to_string(),
@@ -79,6 +80,7 @@ impl Auth {
     /// );
     ///
     /// let transaction = passage_flex
+    ///     .auth
     ///     .create_authenticate_transaction(
     ///         "00000000-0000-0000-0000-000000000001".to_string(),
     ///     )
@@ -118,7 +120,7 @@ impl Auth {
     ///     std::env::var("PASSAGE_API_KEY").unwrap(),
     /// );
     ///
-    /// match passage_flex.verify_nonce("01234567890123456789".to_string()).await {
+    /// match passage_flex.auth.verify_nonce("01234567890123456789".to_string()).await {
     ///     Ok(external_id) => {
     ///         // use external_id to do things like generate and send your own auth token
     ///     }

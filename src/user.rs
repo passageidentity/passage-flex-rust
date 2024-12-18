@@ -67,7 +67,7 @@ impl User {
     /// );
     ///
     /// let external_id = "00000000-0000-0000-0000-000000000001";
-    /// let user_info = passage_flex.get(external_id.to_string()).await.unwrap();
+    /// let user_info = passage_flex.user.get(external_id.to_string()).await.unwrap();
     /// println!("{:?}", user_info.id);
     /// ```
     pub async fn get(&self, external_id: String) -> Result<Box<UserInfo>, Error> {
@@ -113,7 +113,7 @@ impl User {
     /// );
     ///
     /// let external_id = "00000000-0000-0000-0000-000000000001";
-    /// let passkey_devices = passage_flex.list_devices(external_id.to_string()).await.unwrap();
+    /// let passkey_devices = passage_flex.user.list_devices(external_id.to_string()).await.unwrap();
     /// for device in passkey_devices {
     ///     println!("{}", device.usage_count);
     /// }
@@ -154,7 +154,7 @@ impl User {
     /// let external_id = "00000000-0000-0000-0000-000000000001";
     /// let last_year = Utc::now().naive_utc().date() - Duration::days(365);
     ///
-    /// let passkey_devices = passage_flex.get_devices(external_id.to_string()).await.unwrap();
+    /// let passkey_devices = passage_flex.user.list_devices(external_id.to_string()).await.unwrap();
     ///
     /// for device in passkey_devices {
     ///     let last_login_at_parsed =
@@ -162,6 +162,7 @@ impl User {
     ///
     ///     if last_login_at_parsed < last_year {
     ///         if let Err(err) = passage_flex
+    ///             .user
     ///             .revoke_device(external_id.clone(), device.id)
     ///             .await
     ///         {

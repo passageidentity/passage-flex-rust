@@ -10,9 +10,6 @@
 //!     std::env::var("PASSAGE_APP_ID").unwrap(),
 //!     std::env::var("PASSAGE_API_KEY").unwrap(),
 //! );
-//!
-//! let passage_user = passage_flex.user.get(external_id).await.unwrap();
-//! println!("{:?}", passage_user.webauthn_devices);
 //! ```
 
 use std::fmt;

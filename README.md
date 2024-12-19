@@ -59,22 +59,6 @@ Find more details about Passkey Flex on our [Passkey Flex Documentation](https:/
 
 ## API Reference
 
-### Retrieve App Info
-
-To retrieve information about the app, use the `get_app` method.
-
-```rust
-use passage_flex::PassageFlex;
-
-let passage_flex = PassageFlex::new(
-    std::env::var("PASSAGE_APP_ID").unwrap(),
-    std::env::var("PASSAGE_API_KEY").unwrap(),
-);
-
-let app_info = passage_flex.get_app().await.unwrap();
-println!("{}", app_info.auth_origin);
-```
-
 ### Create a Registration Transaction
 
 To create a transaction to start a user passkey registration, use the `create_register_transaction` method.
@@ -92,6 +76,7 @@ let passkey_display_name =
     "the label for the user's passkey that they will see when logging in".to_string();
 
 let transaction = passage_flex
+    .auth
     .create_register_transaction(external_id, passkey_display_name)
     .await
     .unwrap();
@@ -112,6 +97,7 @@ let passage_flex = PassageFlex::new(
 let external_id = "a unique immutable string that represents your user".to_string();
 
 let transaction = passage_flex
+    .auth
     .create_authenticate_transaction(external_id)
     .await
     .unwrap();
@@ -132,7 +118,7 @@ let passage_flex = PassageFlex::new(
 let nonce =
     "a unique single-use value received from the client after a passkey ceremony".to_string();
 
-match passage_flex.verify_nonce(nonce).await {
+match passage_flex.auth.verify_nonce(nonce).await {
     Ok(external_id) => {
         // use external_id to do things like generate and send your own auth token
     }
@@ -144,7 +130,7 @@ match passage_flex.verify_nonce(nonce).await {
 
 ## Retrieve User Info
 
-To retrieve information about a user by their external ID -- which is the unique, immutable ID you supply to associate the Passage user with your user -- use the `get_user` method.
+To retrieve information about a user by their external ID -- which is the unique, immutable ID you supply to associate the Passage user with your user -- use the `get` method.
 
 ```rust
 use passage_flex::PassageFlex;
@@ -158,13 +144,13 @@ let passage_flex = PassageFlex::new(
 let external_id = your_user.id;
 
 // get user info
-let user_info = passage_flex.get_user(external_id).await.unwrap();
-println!("{:?}", user_info.webauthn_devices);
+let passage_user = passage_flex.user.get(external_id).await.unwrap();
+println!("{:?}", passage_user.webauthn_devices);
 ```
 
 ## Retrieve a user's passkey devices
 
-To retrieve information about a user's passkey devices, use the `get_devices` method.
+To retrieve information about a user's passkey devices, use the `list_devices` method.
 
 ```rust
 use passage_flex::PassageFlex;
@@ -177,8 +163,8 @@ let passage_flex = PassageFlex::new(
 // this is the same value used when creating a transaction
 let external_id = your_user.id;
 
-// get devices
-let passkey_devices = passage_flex.get_devices(external_id).await.unwrap();
+// list devices
+let passkey_devices = passage_flex.user.list_devices(external_id).await.unwrap();
 for device in passkey_devices {
     println!("{}", device.usage_count);
 }
@@ -201,8 +187,8 @@ let passage_flex = PassageFlex::new(
 let external_id = your_user.id;
 let last_year = Utc::now().naive_utc().date() - Duration::days(365);
 
-// get devices
-let passkey_devices = passage_flex.get_devices(external_id.clone()).await.unwrap();
+// list devices
+let passkey_devices = passage_flex.user.list_devices(external_id.clone()).await.unwrap();
 
 for device in passkey_devices {
     // revoke old devices that haven't been used in the last year
@@ -211,6 +197,7 @@ for device in passkey_devices {
 
     if last_login_at_parsed < last_year {
         if let Err(err) = passage_flex
+            .user
             .revoke_device(external_id.clone(), device.id)
             .await
         {

@@ -119,6 +119,7 @@ impl Api {
         let transaction_id = self
             .state
             .passage_client
+            .auth
             .create_register_transaction(user_id.clone(), req.0.email.clone())
             .await
             .map_err(|e| {
@@ -155,6 +156,7 @@ impl Api {
             let transaction_id = self
                 .state
                 .passage_client
+                .auth
                 .create_authenticate_transaction(user_id)
                 .await
                 .map_err(|e| match e {
@@ -180,7 +182,7 @@ impl Api {
     #[oai(path = "/auth/verify", method = "post")]
     async fn verify_nonce(&self, req: Json<VerifyRequest>) -> poem::Result<Json<VerifyResponse>> {
         // Verify the nonce using the Passage SDK
-        match self.state.passage_client.verify_nonce(req.0.nonce).await {
+        match self.state.passage_client.auth.verify_nonce(req.0.nonce).await {
             Ok(user_id) => {
                 // Find the user in the database and set the auth token
                 let mut users = self.state.users.lock().await;
@@ -225,6 +227,7 @@ impl Api {
             let transaction_id = self
                 .state
                 .passage_client
+                .auth
                 .create_register_transaction(user.id.clone(), user.email.clone())
                 .await
                 .map_err(|e| {
@@ -261,7 +264,8 @@ impl Api {
             let passkeys = self
                 .state
                 .passage_client
-                .get_devices(user.id.clone())
+                .user
+                .list_devices(user.id.clone())
                 .await
                 .map(|devices| {
                     devices
@@ -306,6 +310,7 @@ impl Api {
             // Revoke the passkey device using the Passage SDK
             self.state
                 .passage_client
+                .user
                 .revoke_device(user.id.clone(), req.0.passkey_id.clone())
                 .await
                 .map_err(|e| {

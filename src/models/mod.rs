@@ -1,5 +1,3 @@
-mod app_info;
-mod user_info;
+mod passage_user;
 
-pub use app_info::AppInfo;
-pub use user_info::UserInfo;
+pub use passage_user::PassageUser;

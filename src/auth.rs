@@ -104,7 +104,9 @@ impl Auth {
         external_id: String,
     ) -> Result<String, Error> {
         if external_id.is_empty() {
-            return Err(Error::Other("external_id is required".to_string()));
+            return Err(Error::InvalidArgument(
+                "external_id is required".to_string(),
+            ));
         }
 
         transactions_api::create_authenticate_transaction(
@@ -147,7 +149,7 @@ impl Auth {
     /// ```
     pub async fn verify_nonce(&self, nonce: String) -> Result<String, Error> {
         if nonce.is_empty() {
-            return Err(Error::Other("nonce is required".to_string()));
+            return Err(Error::InvalidArgument("nonce is required".to_string()));
         }
 
         authenticate_api::authenticate_verify_nonce(

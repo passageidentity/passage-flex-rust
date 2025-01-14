@@ -29,6 +29,14 @@ impl PassageFlex {
     /// );
     /// ```
     pub fn new(app_id: String, api_key: String) -> Self {
+        if app_id.is_empty() {
+            panic!("A Passage App ID is required. Please include (app_id: YOUR_APP_ID, api_key: YOUR_APP_ID).");
+        }
+
+        if api_key.is_empty() {
+            panic!("A Passage API key is required. Please include (app_id: YOUR_APP_ID, api_key: YOUR_APP_ID).");
+        }
+
         let mut headers = reqwest::header::HeaderMap::with_capacity(1);
         headers.insert(
             "Passage-Version",

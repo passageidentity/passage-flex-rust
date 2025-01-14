@@ -15,6 +15,12 @@ impl User {
 
     /// Get a user's ID in Passage by their external ID
     async fn get_id(&self, external_id: String) -> Result<String, Error> {
+        if external_id.is_empty() {
+            return Err(Error::InvalidArgument(
+                "external_id is required".to_string(),
+            ));
+        }
+
         let users = users_api::list_paginated_users(
             &self.configuration,
             Some(1),
@@ -172,6 +178,10 @@ impl User {
     /// }
     /// ```
     pub async fn revoke_device(&self, external_id: String, device_id: String) -> Result<(), Error> {
+        if device_id.is_empty() {
+            return Err(Error::InvalidArgument("device_id is required".to_string()));
+        }
+
         let user_id = self.get_id(external_id).await?;
         user_devices_api::delete_user_devices(&self.configuration, &user_id, &device_id)
             .await

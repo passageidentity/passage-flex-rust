@@ -55,7 +55,7 @@ let passage_flex = PassageFlex::new(
 
 ### Go Passwordless
 
-Find more details about Passkey Flex on our [Passkey Flex Documentation](https://docs.passage.id/flex) and [Docs.rs](https://docs.rs/passage_flex/latest/passage_flex/) pages.
+Find all core functions and more implementation guidance on our [Passkey Flex Rust Documentation](https://docs.passage.id/flex/rust) page.
 
 ## Support & Feedback
 

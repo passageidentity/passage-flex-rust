@@ -127,7 +127,9 @@ impl From<crate::openapi::models::model_401_error::Model401Error> for Error {
 impl From<crate::openapi::models::model_400_error::Model400Error> for Error {
     fn from(e: crate::openapi::models::model_400_error::Model400Error) -> Self {
         match e.code {
-            crate::openapi::models::model_400_error::Code::InvalidRequest => Error::InvalidRequest,
+            crate::openapi::models::model_400_error::Code::InvalidRequest => {
+                Error::InvalidRequest(e.error)
+            }
             _ => Error::Other(e.error),
         }
     }

@@ -31,6 +31,7 @@ pub enum Error {
     UserHasNoPasskeys,
     InternalServerError,
     Other(String),
+    InvalidArgument(String),
 }
 
 impl fmt::Display for Error {
@@ -48,6 +49,7 @@ impl fmt::Display for Error {
             Error::UserHasNoPasskeys => ("response", "user has no passkeys".to_string()),
             Error::InternalServerError => ("response", "internal server error".to_string()),
             Error::Other(e) => ("response", e.to_string()),
+            Error::InvalidArgument(e) => ("argument", e.to_string()),
         };
         write!(f, "error in {}: {}", module, e)
     }

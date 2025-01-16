@@ -26,10 +26,11 @@ jobs:
       - uses: katyo/publish-crates@v2
         with:
           registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        id: publish-crates
         if: ${{ steps.release.outputs.release_created }}
       # https://github.com/googleapis/release-please-action?tab=readme-ov-file#creating-majorminor-tags
       - name: Tag versions
-        if: ${{ steps.release.outputs.release_created && fromJSON(steps.publish-crates.outputs.published).* }}
+        if: ${{ steps.release.outputs.release_created && steps.publish-crates.outcome == 'success' }}
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com

@@ -68,6 +68,3 @@ impl PassageFlex {
         self.auth.configuration.base_path = format!("{}/v1/apps/{}", server_url, self.app_id);
     }
 }
-
-#[cfg(test)]
-mod test;

@@ -1,6 +1,6 @@
 [package]
 name = "passage_flex"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 authors = ["support@passage.id"]
 description = "Passkey Flex for Rust - Add passkey authentication to your own Rust authentication flows with Passage by 1Password"

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/passageidentity/passage-flex-rust/compare/v1.0.0...v1.0.1) (2025-03-11)
+
+
+### Bug Fixes
+
+* sync codegen output & pin codegen version ([#42](https://github.com/passageidentity/passage-flex-rust/issues/42)) ([2cb9f51](https://github.com/passageidentity/passage-flex-rust/commit/2cb9f512ae52f02e4b3b8f8e4c8c52f7b0ee178f))
+
 ## [1.0.0](https://github.com/passageidentity/passage-flex-rust/compare/v0.1.3...v1.0.0) (2025-01-16)
 
 

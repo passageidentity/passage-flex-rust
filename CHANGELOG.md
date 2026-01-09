@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/passageidentity/passage-flex-rust/compare/v1.0.1...v1.0.2) (2026-01-09)
+
+
+### Documentation
+
+* add sunset notice to README ([#44](https://github.com/passageidentity/passage-flex-rust/issues/44)) ([724e793](https://github.com/passageidentity/passage-flex-rust/commit/724e793640e2d2ae8d296a9ade03b2c231870e35))
+
 ## [1.0.1](https://github.com/passageidentity/passage-flex-rust/compare/v1.0.0...v1.0.1) (2025-03-11)
 
 
